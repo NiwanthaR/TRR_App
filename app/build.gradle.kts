@@ -73,4 +73,7 @@ dependencies {
     //Lottie image animation view
     implementation ("com.airbnb.android:lottie:6.1.0")
 
+    //picasso image
+    implementation ("com.squareup.picasso:picasso:2.8")
+
 }
