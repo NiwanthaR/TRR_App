@@ -14,10 +14,10 @@ import com.google.android.material.snackbar.Snackbar
 
 class LoginScreen : BaseActivity(), OnClickListener {
 
-    private val userName : EditText
+    private val userNameInput : EditText
     = findViewById(R.id.username)
 
-    private val userPassword : EditText
+    private val userPasswordInput : EditText
     = findViewById(R.id.password)
 
     private val btnLogin : Button
@@ -25,6 +25,13 @@ class LoginScreen : BaseActivity(), OnClickListener {
 
     private val contentView :View
     = findViewById(R.id.loginView)
+
+    //User Info
+    private val userName : String
+    = userNameInput.text.toString()
+
+    private val userPassword : String
+    = userPasswordInput.text.toString()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,10 +51,12 @@ class LoginScreen : BaseActivity(), OnClickListener {
     }
 
     private fun login(){
-        if (userName.text!=null || userPassword.text!=null){
-
+        if (userNameInput.text!=null || userPasswordInput.text!=null){
+            //send value
+            validate(userName,userPassword)
         }else{
-
+            Snackbar.make(contentView, R.string.details_incomplete, Snackbar.LENGTH_SHORT)
+                .show()
         }
     }
 

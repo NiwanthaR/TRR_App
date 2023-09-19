@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TRR_App</string>
+
+    <string name="details_incomplete">Please fill all Retails.</string>
 </resources>
