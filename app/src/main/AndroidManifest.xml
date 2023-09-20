@@ -13,6 +13,9 @@
         android:theme="@style/Theme.TRR_App"
         tools:targetApi="31">
         <activity
+            android:name=".view.SettingsUI.UserSettings"
+            android:exported="false" />
+        <activity
             android:name=".view.ManageUI.ManageActivity"
             android:exported="false" />
         <activity
@@ -20,7 +23,7 @@
             android:exported="false" />
         <activity
             android:name=".view.LoginScreen"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".view.SplashScreen"
             android:exported="true">
