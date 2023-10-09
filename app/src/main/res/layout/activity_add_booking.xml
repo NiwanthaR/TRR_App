@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.ManageUI.AddBooking">
 
-
     <LinearLayout
         android:id="@+id/topToolBar"
         android:layout_width="match_parent"
@@ -48,113 +47,95 @@
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-    
-    <LinearLayout
+
+    <ScrollView
         android:layout_below="@id/topToolBar"
-        android:id="@+id/titleBar1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_gravity="center_vertical"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"/>
-        
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginEnd="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_height="wrap_content"
-            android:text="Person Details"/>
-
-
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_below="@id/titleBar1"
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etFName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginEnd="5dp"
-                android:layout_height="wrap_content"
-                android:hint="First Name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etSName"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                android:layout_height="wrap_content"
-                android:hint="First Name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:startIconDrawable="@drawable/calendar_month_24"
-            app:endIconMode="custom"
-            app:endIconDrawable="@drawable/close_24"
-            android:hint="Select Date">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <LinearLayout
+                android:id="@+id/titleBar1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:orientation="horizontal">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Person Details"/>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etFName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etSName"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:hint="First Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/etNIC"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_marginEnd="5dp"
+                android:id="@+id/filledTextField"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:startIconDrawable="@drawable/contact_emergency_24"
-                android:hint="NIC">
+                android:layout_marginTop="5dp"
+                app:startIconDrawable="@drawable/location_icon"
+                app:endIconMode="custom"
+                android:hint="Address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -162,31 +143,290 @@
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etArea"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Area">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etCity"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:hint="City">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_contactNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:endIconDrawable="@drawable/close_24"
+                app:startIconDrawable="@drawable/call_icon"
+                app:endIconMode="custom"
+                android:hint="Contact">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/devidePanel01"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etNIC"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/contact_emergency_24"
+                    android:hint="NIC">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_below="@id/devidePanel01"
+                android:id="@+id/titleBar2"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Booking Details"/>
+
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tv_bookingDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:startIconDrawable="@drawable/calendar_month_24"
+                app:endIconMode="custom"
+                android:hint="Booking Date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etBookingType"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/person_add_alt_1_24"
+                    android:hint="Head Count">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/etRoomCount"
+                    android:layout_width="0dp"
+                    android:layout_weight="4"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:hint="Rooms">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/etPCount"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginStart="5dp"
-                app:startIconDrawable="@drawable/person_add_alt_1_24"
+                android:layout_width="match_parent"
+                android:layout_marginTop="8dp"
                 android:layout_height="wrap_content"
-                android:hint="Count">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:hint="Booking Type">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <AutoCompleteTextView
                     android:layout_width="match_parent"
-                    android:inputType="number"
                     android:layout_height="wrap_content"
+                    android:inputType="none"
                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/titleBar3"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="wrap_content"
+                    android:text="Booking Details"/>
+
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="0dp"
+                    android:layout_weight="80"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/roomSelection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:checked="true"
+                    android:text="VVIP Room"/>
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="VIP Room"/>
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Sea View Room"/>
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Jungle View Room"/>
+                <CheckBox
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Mass Hall"/>
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Special Note">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:lines="4"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:layout_height="match_parent"
+                    android:text="Cancel Booking"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:layout_height="match_parent"
+                    android:text="Submit Booking"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+
+            </LinearLayout>
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_marginTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"/>
-
-    </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

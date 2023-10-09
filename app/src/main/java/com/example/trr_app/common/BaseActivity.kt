@@ -1,6 +1,7 @@
 package com.example.trr_app.common
 
 import android.content.Context
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trr_app.support.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -51,5 +52,4 @@ open class BaseActivity : AppCompatActivity() {
     open fun loadingDialogClose(){
         loadingDialog.dismiss()
     }
-
 }

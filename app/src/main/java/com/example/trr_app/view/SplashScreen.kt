@@ -18,7 +18,7 @@ class SplashScreen : AppCompatActivity() {
         //waiting time
         Handler(Looper.getMainLooper()).postDelayed({
             // Your Code
-            val homeIntent = Intent(this@SplashScreen, Dashboard::class.java)
+            val homeIntent = Intent(this@SplashScreen, LoginScreen::class.java)
             startActivity(homeIntent)
             finish()
         }, SPLASH_TIME_OUT.toLong())
