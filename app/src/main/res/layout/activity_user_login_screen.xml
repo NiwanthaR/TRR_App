@@ -23,7 +23,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/exlogo"
+                android:src="@drawable/hotel_logo"
                 android:layout_marginTop="60dp"
                 android:layout_gravity="bottom"/>
 
@@ -92,19 +92,21 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/light_dark_blue"
+            android:textColor="@color/app_yellow_light"
             android:textAlignment="center"
             android:textSize="16dp"
             android:layout_gravity="center"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnUserLogin"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            style="@style/Widget.MaterialComponents.Button"
+            android:textColor="@color/black"
+            android:background="@color/app_yellow_light"
+            app:backgroundTint="@color/app_yellow_light"
             android:text="Login"/>
 
         <LinearLayout

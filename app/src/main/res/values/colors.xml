@@ -10,6 +10,9 @@
     <color name="light_orange">#FFE3AC</color>
     <color name="light_green">#B7FF9E</color>
     <color name="light_dark_blue">#C5DFF8</color>
-    <color name="semiTransparentColor">#60FFFFFF</color>
+    <color name="semiTransparentColor">#80FFFFFF</color>
     <color name="light_yellow">#FFF9DE</color>
+
+    <color name="app_yellow_dark">#ffc40c </color>
+    <color name="app_yellow_light">#FCE205</color>
 </resources>
