@@ -24,7 +24,11 @@ class ManageActivity : BaseActivity(), OnClickListener {
 
     override fun onClick(view: View?) {
         when(view?.id){
-            R.id.floating_action_addBooking -> startActivity(Intent(this, AddBooking::class.java))
+            R.id.floating_action_addBooking -> navigateToAddBooking()
         }
+    }
+
+    private fun navigateToAddBooking(){
+        startActivity(Intent(this, AddBooking::class.java))
     }
 }

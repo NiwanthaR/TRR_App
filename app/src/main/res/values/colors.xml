@@ -15,4 +15,10 @@
 
     <color name="app_yellow_dark">#ffc40c </color>
     <color name="app_yellow_light">#FCE205</color>
+
+    <color name="app_background_accept_btn">#00b33c</color>
+    <color name="app_backgrounf_cancel_btn">#cc2900</color>
+
+    <!--font colour splash -->
+    <color name="app_splash_copyrights">#30424242</color>
 </resources>

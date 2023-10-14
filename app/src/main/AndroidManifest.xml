@@ -13,6 +13,12 @@
         android:theme="@style/Theme.TRR_App"
         tools:targetApi="31">
         <activity
+            android:name=".view.Users.CreateUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.ManageUI.ManageBookingUI"
+            android:exported="false" />
+        <activity
             android:name=".view.ManageUI.AddBooking"
             android:exported="false" />
         <activity
@@ -26,21 +32,19 @@
             android:exported="false" />
         <activity
             android:name=".view.Dashboard"
-            android:exported="true" >
+            android:exported="true" />
+        <activity
+            android:name=".view.LoginScreen"
+            android:exported="true"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".view.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".view.LoginScreen"
-            android:windowSoftInputMode="stateHidden"
-            android:exported="true" />
-        <activity
-            android:name=".view.SplashScreen"
-            android:exported="true">
-
         </activity>
         <activity
             android:name=".MainActivity"

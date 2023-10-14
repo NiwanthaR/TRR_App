@@ -22,6 +22,7 @@ open class BaseActivity : AppCompatActivity() {
     val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
     //Firebase User
     val firebaseUser : FirebaseUser? = firebaseAuth.currentUser
+    //Firebase User
 
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog

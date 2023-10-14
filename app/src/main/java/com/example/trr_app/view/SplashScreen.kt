@@ -23,4 +23,8 @@ class SplashScreen : AppCompatActivity() {
             finish()
         }, SPLASH_TIME_OUT.toLong())
     }
+
+    fun checkUserAvailability(){
+
+    }
 }
