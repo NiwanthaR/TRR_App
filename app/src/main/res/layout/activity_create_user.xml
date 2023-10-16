@@ -4,8 +4,226 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/newUserCreateView"
     tools:context=".view.Users.CreateUserActivity">
 
-    
+    <LinearLayout
+        android:id="@+id/topToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            app:cardBackgroundColor="@color/white"
+            app:strokeColor="@color/white"
+            android:layout_marginStart="10dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/backIcon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/back_btn"
+                    android:layout_marginStart="5dp"
+                    android:layout_centerVertical="true"/>
+
+                <TextView
+                    android:id="@+id/pageTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/backIcon"
+                    android:fontFamily="@font/rubik_medium"
+                    android:text="Create New User"
+                    android:textSize="25sp" />
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userProfileImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/topToolBar"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        app:cardCornerRadius="250dp"
+        app:cardBackgroundColor="@color/white">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="250dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/newUserProfileImg"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/add_user_image"
+                android:scaleType="centerCrop"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@+id/userProfileImage"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userCreateName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/user"
+        android:hint="User Name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_newUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/userCreateName"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userCategory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/contact_emergency_24"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:hint="User Category">
+
+        <AutoCompleteTextView
+            android:id="@+id/at_userCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/userCategory"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/call_icon"
+        android:hint="User Contact">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_userContact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/userContact"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/mail_icon"
+        android:hint="User Email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_userEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/userEmail"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userPassword1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/lock_icon"
+        android:hint="User Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_userPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_below="@id/userPassword1"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:id="@+id/userPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:startIconDrawable="@drawable/lock_icon"
+        android:hint="Re-User Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tie_reUserPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_below="@id/userPassword2"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="25dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancelCreateUser"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:layout_height="match_parent"
+            android:text="Sign In"
+            android:backgroundTint="@color/app_backgrounf_cancel_btn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+        <Button
+            android:id="@+id/btn_acceptCreateUser"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:layout_height="match_parent"
+            android:text="Submit Booking"
+            android:backgroundTint="@color/app_background_accept_btn"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>

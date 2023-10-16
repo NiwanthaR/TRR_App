@@ -164,7 +164,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btn_gosignin_service_login"
+                    android:id="@+id/btn_newSignUp"
                     android:gravity="right|center"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"

@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
+import com.example.trr_app.view.Users.CreateUserActivity
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 
@@ -26,6 +28,9 @@ class LoginScreen : BaseActivity(), OnClickListener {
 
     private val contentView :LinearLayout
         get()= findViewById(R.id.userLoginView)
+
+    private val goToSignUpNewUser : MaterialButton
+        get() = findViewById(R.id.btn_newSignUp)
 
     private val TAG: String
     = LoginScreen::class.java.name
@@ -47,6 +52,9 @@ class LoginScreen : BaseActivity(), OnClickListener {
 
         //login click
         btnLogin.setOnClickListener(this)
+
+        //create new User
+        goToSignUpNewUser.setOnClickListener(this)
         
 
     }
@@ -62,7 +70,12 @@ class LoginScreen : BaseActivity(), OnClickListener {
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.btnUserLogin -> login()
+            R.id.btn_newSignUp -> moveToCreateUser()
         }
+    }
+
+    private fun moveToCreateUser(){
+        startActivity(Intent(this@LoginScreen,CreateUserActivity::class.java))
     }
 
     private fun login(){
@@ -96,6 +109,7 @@ class LoginScreen : BaseActivity(), OnClickListener {
                             //checkemail_verification();
                             startActivity(Intent(this@LoginScreen, Dashboard::class.java))
                             Log.d(TAG,"Login Successfully.")
+                            Snackbar.make(contentView,"Login Successfully.",Snackbar.LENGTH_SHORT).show()
                         } else {
                             //progressDialog.dismiss()
                             //wrong_details.setText("Login Failed Check your Details")

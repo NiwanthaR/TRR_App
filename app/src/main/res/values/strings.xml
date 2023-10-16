@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">TRR_App</string>
     <string name="details_incomplete">Please fill all Details.</string>
+
+    <!--User Create Activity-->
+    <string name="password_type_error">Password is not match for your organization</string>
+    <string name="password_not_equal">Password not equal.</string>
+    <string name="email_not_valid">Please enter valid Email.</string>
+    <string name="incomplete_details">Please Fill Required Details.</string>
 </resources>

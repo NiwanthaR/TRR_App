@@ -1,7 +1,6 @@
 package com.example.trr_app.common
 
 import android.content.Context
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trr_app.support.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -53,4 +52,29 @@ open class BaseActivity : AppCompatActivity() {
     open fun loadingDialogClose(){
         loadingDialog.dismiss()
     }
+
+    open fun equalPassword(password: String, rePassword: String): Boolean {
+        return password == rePassword
+    }
+
+    open fun verifyPassword(password: String): Boolean {
+        val p = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])")
+        val m = p.matcher(password)
+        return m.find() && password.length > 7
+    }
+
+    open fun verifyEmail(email: String): Boolean {
+        val p =
+            Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
+        val m = p.matcher(email)
+        return m.find()
+    }
+
+    open fun verifyContact(contact: String): Boolean {
+        val p =
+            Pattern.compile("(^1300\\d{6}$)|(^0[1|3|7|6|8]{1}[0-9]{8}$)|(^13\\d{4}$)|(^04\\d{2,3}\\d{6}$)")
+        val m = p.matcher(contact)
+        return m.find()
+    }
+
 }
