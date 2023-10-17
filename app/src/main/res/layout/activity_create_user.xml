@@ -142,6 +142,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:id="@+id/userEmail"
+        android:nextFocusDown="@id/userPassword1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:startIconDrawable="@drawable/mail_icon"
@@ -163,6 +164,8 @@
         android:id="@+id/userPassword1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
+        android:nextFocusDown="@id/userPassword2"
         app:startIconDrawable="@drawable/lock_icon"
         android:hint="User Password">
 
@@ -170,6 +173,7 @@
             android:id="@+id/tie_userPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -182,6 +186,7 @@
         android:id="@+id/userPassword2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:endIconMode="password_toggle"
         app:startIconDrawable="@drawable/lock_icon"
         android:hint="Re-User Password">
 
@@ -189,6 +194,7 @@
             android:id="@+id/tie_reUserPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

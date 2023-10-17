@@ -24,6 +24,9 @@ class Dashboard : BaseActivity(),OnClickListener {
     private val quickBookingDashboard : RelativeLayout
         get() = findViewById(R.id.layoutQuickBooking)
 
+    private val userLogoutDashboard : RelativeLayout
+        get() = findViewById(R.id.userLogoutLayout)
+
     private val bookingHistoryCard : MaterialCardView
         get() = findViewById(R.id.historyCardView)
 
@@ -36,7 +39,7 @@ class Dashboard : BaseActivity(),OnClickListener {
         manageUIDashboard.setOnClickListener(this)
         quickBookingDashboard.setOnClickListener(this)
         bookingHistoryCard.setOnClickListener(this)
-
+        userLogoutDashboard.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -44,6 +47,7 @@ class Dashboard : BaseActivity(),OnClickListener {
             R.id.manageUILayout -> startActivity(Intent(this,ManageActivity::class.java))
             R.id.layoutQuickBooking ->showBottomDialog()
             R.id.historyCardView -> loadingProgressDialog(this)
+            R.id.userLogoutLayout -> userSignOut()
         }
     }
 
@@ -63,5 +67,11 @@ class Dashboard : BaseActivity(),OnClickListener {
         //val bottomSheet = QuickBookingDialog()
         //bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
 
+    }
+
+    private fun userSignOut(){
+        firebaseAuth.signOut()
+        finish()
+        startActivity(Intent(this@Dashboard,SplashScreen::class.java))
     }
 }

@@ -7,4 +7,12 @@
     <string name="password_not_equal">Password not equal.</string>
     <string name="email_not_valid">Please enter valid Email.</string>
     <string name="incomplete_details">Please Fill Required Details.</string>
+    <string name="new_user_create_success">New user created successfully.</string>
+    <string name="new_user_create_failed">User data upload Fail.</string>
+    <string name="new_user_create_decline">User create Unsuccessfully</string>
+    <string name="no_connection">You are in offline.....</string>
+
+    <!--Firebase Database Reference-->
+    <string name="users_data_location">User Details</string>
+    <string name="users_profile_location">User Profiles</string>
 </resources>
