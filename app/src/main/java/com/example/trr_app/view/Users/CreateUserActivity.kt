@@ -79,7 +79,7 @@ class CreateUserActivity : BaseActivity(), OnClickListener {
             R.id.btn_cancelCreateUser -> goBack()
         }
     }
-    
+
     private fun goBack(){
         onBackPressed()
         this.finish()
@@ -260,13 +260,13 @@ class CreateUserActivity : BaseActivity(), OnClickListener {
 
         if (firebaseUser!=null){
             //data backup
-            val userDatabaseReference =
+            userDatabaseReference =
                 firebaseDatabaseReference.child(getString(R.string.users_data_location))
                     .child(getString(R.string.users_profile_location)).child(
                         firebaseUser!!.uid
                     )
 
-            userDatabaseReference.setValue(userData).addOnCompleteListener { task ->
+            userDatabaseReference!!.setValue(userData).addOnCompleteListener { task ->
                 val result = task.result
                 if (task.isSuccessful) {
                     //upload Image

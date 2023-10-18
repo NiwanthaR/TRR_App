@@ -30,6 +30,8 @@ open class BaseActivity : AppCompatActivity() {
     val firebaseDatabaseReference : DatabaseReference = firebaseDatabase.reference.child("TRRApp")
     //Firebase Storage reference
     val firebaseStorageReference : StorageReference = firebaseStorage.reference
+    //Firebase User Data Location
+    var userDatabaseReference : DatabaseReference? = null
 
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog
