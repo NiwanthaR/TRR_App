@@ -11,6 +11,11 @@
     <string name="new_user_create_failed">User data upload Fail.</string>
     <string name="new_user_create_decline">User create Unsuccessfully</string>
     <string name="no_connection">You are in offline.....</string>
+    <string name="image_error">ActivityResultContracts image process error</string>
+    <string name="category_error">Please select category.</string>
+    <string name="data_upload_error">Error Code : FBUN</string>
+    <string name="data_upload_error02">Error Code : FBUF</string>
+    <string name="data_upload_error03">Error Code : FBTNS</string>
 
     <!--Firebase Database Reference-->
     <string name="users_data_location">User Details</string>

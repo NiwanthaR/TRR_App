@@ -25,7 +25,7 @@ open class BaseActivity : AppCompatActivity() {
     //Firebase Storage
     val firebaseStorage : FirebaseStorage = FirebaseStorage.getInstance()
     //Firebase User
-    val firebaseUser : FirebaseUser? = firebaseAuth.currentUser
+    var firebaseUser : FirebaseUser? = firebaseAuth.currentUser
     //Firebase database reference
     val firebaseDatabaseReference : DatabaseReference = firebaseDatabase.reference.child("TRRApp")
     //Firebase Storage reference
