@@ -20,4 +20,9 @@
     <!--Firebase Database Reference-->
     <string name="users_data_location">User Details</string>
     <string name="users_profile_location">User Profiles</string>
+
+    <!--Add Booking-->
+    <string name="user_name_error">Please input valid user name.</string>
+    <string name="user_valid_date">Please input valid date.</string>
+    <string name="user_room_count">Please select room count</string>
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/addBookingLayout"
     tools:context=".view.ManageUI.AddBooking">
 
     <LinearLayout
@@ -128,6 +129,7 @@
                     android:hint="Head Count">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/eti_HeadCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -144,6 +146,7 @@
                     android:hint="Rooms">
 
                     <AutoCompleteTextView
+                        android:id="@+id/ac_roomCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
@@ -162,6 +165,7 @@
                 android:hint="Booking Type">
 
                 <AutoCompleteTextView
+                    android:id="@+id/ac_bookingType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="none"
@@ -204,23 +208,27 @@
                 android:orientation="vertical">
 
                 <CheckBox
+                    android:id="@+id/cbRoom01"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:checked="true"
                     android:text="VVIP Room"/>
                 <CheckBox
+                    android:id="@+id/cbRoom02"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="VIP Room"/>
                 <CheckBox
+                    android:id="@+id/cbRoom03"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Sea View Room"/>
                 <CheckBox
+                    android:id="@+id/cbRoom04"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Jungle View Room"/>
                 <CheckBox
+                    android:id="@+id/cbRoom05"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Mass Hall"/>
@@ -267,6 +275,7 @@
                     android:hint="First Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/eti_fname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -279,9 +288,10 @@
                     android:layout_weight="1"
                     android:layout_marginStart="5dp"
                     android:layout_height="wrap_content"
-                    android:hint="First Name">
+                    android:hint="Second Name">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/eti_sname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -300,6 +310,7 @@
                 android:hint="Address">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eti_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -313,7 +324,7 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etArea"
+                    android:id="@+id/eti_Area"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="5dp"
@@ -336,6 +347,7 @@
                     android:hint="City">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/eti_city"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -355,6 +367,7 @@
                 android:hint="Contact">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eti_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
@@ -378,6 +391,7 @@
                     android:hint="NIC">
 
                     <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/eti_nic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -439,35 +453,35 @@
                         android:layout_width="match_parent">
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_1"
+                            android:id="@+id/chipF_1"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Kitchen"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_2"
+                            android:id="@+id/chipF_2"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Iron"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_3"
+                            android:id="@+id/chipF_3"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Baby Bath TUB"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_4"
+                            android:id="@+id/chipF_4"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Washing Machin"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_5"
+                            android:id="@+id/chipF_5"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -527,42 +541,42 @@
                     android:layout_width="match_parent">
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_7"
+                        android:id="@+id/chip_morningTea"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Morning Tea"/>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_8"
+                        android:id="@+id/chip_eveningTea"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Evening Tea"/>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_9"
+                        android:id="@+id/chip_breakfast"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Breakfast"/>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_10"
+                        android:id="@+id/chip_lunch"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Lunch"/>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_11"
+                        android:id="@+id/chip_dinner"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dinner"/>
 
                     <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_12"
+                        android:id="@+id/chip_bbq"
                         style="@style/Widget.MaterialComponents.Chip.Filter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -580,6 +594,7 @@
                 android:hint="Special Note">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/eti_specialNote"
                     android:layout_width="match_parent"
                     android:inputType="textMultiLine"
                     android:gravity="top"
@@ -595,7 +610,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btn_cancel"
+                    android:id="@+id/btn_cancelBooked"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="5dp"
@@ -605,7 +620,7 @@
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
                 <Button
-                    android:id="@+id/btn_submit"
+                    android:id="@+id/btn_submitBooked"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_marginStart="5dp"

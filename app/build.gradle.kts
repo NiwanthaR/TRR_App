@@ -76,4 +76,6 @@ dependencies {
     //picasso image
     implementation ("com.squareup.picasso:picasso:2.8")
 
+    //GSON
+    implementation ("com.google.code.gson:gson:2.10.1")
 }
