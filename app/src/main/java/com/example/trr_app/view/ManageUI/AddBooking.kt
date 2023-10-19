@@ -405,7 +405,7 @@ class AddBooking : BaseActivity(), OnClickListener {
 
         //make database reference
         if (makeDataBaseReference()){
-            
+
         }else{
 
         }
@@ -453,7 +453,7 @@ class AddBooking : BaseActivity(), OnClickListener {
         }
     }
     private fun uploadData(){
-        val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,roomReservationGSON)
+        val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON)
     }
 
 }
