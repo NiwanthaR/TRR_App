@@ -405,12 +405,31 @@ class AddBooking : BaseActivity(), OnClickListener {
 
         //make database reference
         if (makeDataBaseReference()){
-
+            addBookingReference.setValue(SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON))
+                .addOnCompleteListener { task ->
+                    val result = task.result
+                    if (task.isSuccessful){
+                        Log.e(TAG, "Booking Successfully")
+                        Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT)
+                            .show()
+                    }else{
+                        Log.e(TAG, "Failed to create booking.")
+                        Snackbar.make(contentView, R.string.booking_data_upload_fail, Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                .addOnFailureListener { task ->
+                    if (task.message!=null){
+                        Log.e(TAG, "data upload fail in addOnFailureListener")
+                        Snackbar.make(contentView,task.message.toString(), Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+                }
         }else{
-
+            Log.e(TAG, "data upload fail in database reference null")
+            Snackbar.make(contentView,R.string.booking_data_upload_fail, Snackbar.LENGTH_SHORT)
+                .show()
         }
-
-
 
     }
 
@@ -455,5 +474,4 @@ class AddBooking : BaseActivity(), OnClickListener {
     private fun uploadData(){
         val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON)
     }
-
 }

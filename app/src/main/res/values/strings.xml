@@ -25,4 +25,6 @@
     <string name="user_name_error">Please input valid user name.</string>
     <string name="user_valid_date">Please input valid date.</string>
     <string name="user_room_count">Please select room count</string>
+    <string name="booking_data_upload_fail">Failed to create booking.</string>
+    <string name="booking_successfully">Booking Successfully</string>
 </resources>
