@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:background="@drawable/card_background01"
+        android:layout_height="200dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background01">
+
+            <TextView
+                android:id="@+id/personTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
+                android:textSize="10sp"
+                android:fontFamily="@font/rubik_medium"
+                android:text="Person Name"/>
+
+            <TextView
+                android:layout_below="@id/personTitle"
+                android:id="@+id/bookingPersonName"
+                android:layout_marginStart="12dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Unknown User"/>
+
+            <TextView
+                android:id="@+id/dateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="12dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="10sp"
+                android:text="Booked Dates"/>
+
+            <TextView
+                android:layout_below="@id/dateTitle"
+                android:id="@+id/bookedDate"
+                android:layout_marginEnd="12dp"
+                android:layout_alignParentEnd="true"
+                android:textSize="18dp"
+                android:fontFamily="@font/merriweather_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023/11/05-2023/11/05"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeTitle"
+                android:layout_below="@id/bookingPersonName"
+                android:layout_marginStart="12sp"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="10sp"
+                android:text="Booking Type"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookingType"
+                android:layout_below="@id/typeTitle"
+                android:layout_marginStart="12sp"
+                android:fontFamily="@font/merriweather_light"
+                android:textSize="12sp"
+                android:text="Family"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addressTitle"
+                android:layout_below="@id/bookingType"
+                android:layout_marginStart="12sp"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:text="Address"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookingAddress"
+                android:layout_below="@id/addressTitle"
+                android:layout_marginStart="12sp"
+                android:textSize="12sp"
+                android:fontFamily="@font/merriweather_light"
+                android:text="No34, Samagi Mawatha, Maharagama. "/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/contactTitle"
+                android:layout_below="@id/bookingAddress"
+                android:layout_marginStart="12sp"
+                android:fontFamily="@font/rubik_medium"
+                android:textSize="10sp"
+                android:layout_marginTop="8dp"
+                android:text="Contact"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookingContact"
+                android:layout_below="@id/contactTitle"
+                android:layout_marginStart="12sp"
+                android:textSize="12sp"
+                android:fontFamily="@font/merriweather_light"
+                android:text="0773456765"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bookingSeeMore"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/rubik_medium"
+                android:layout_marginBottom="30dp"
+                android:textSize="14sp"
+                android:text="See More Details"/>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

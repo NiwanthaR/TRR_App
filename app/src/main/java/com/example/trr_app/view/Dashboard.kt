@@ -11,6 +11,7 @@ import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.support.QuickBookingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
+import com.example.trr_app.view.ManageUI.QuickBookingActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
@@ -45,10 +46,14 @@ class Dashboard : BaseActivity(),OnClickListener {
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.manageUILayout -> startActivity(Intent(this,ManageActivity::class.java))
-            R.id.layoutQuickBooking ->showBottomDialog()
+            R.id.layoutQuickBooking ->moveToQuickBooking()
             R.id.historyCardView -> loadingProgressDialog(this)
             R.id.userLogoutLayout -> userSignOut()
         }
+    }
+
+    private fun moveToQuickBooking(){
+        startActivity(Intent(this@Dashboard,QuickBookingActivity::class.java))
     }
 
     private fun showBottomDialog(){

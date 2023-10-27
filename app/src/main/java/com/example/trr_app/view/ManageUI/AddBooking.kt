@@ -1,6 +1,6 @@
 package com.example.trr_app.view.ManageUI
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -17,17 +17,14 @@ import com.example.trr_app.model.FeatureReservation
 import com.example.trr_app.model.MealChooser
 import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
-import com.example.trr_app.view.LoginScreen
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.DatabaseReference
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -172,7 +169,7 @@ class AddBooking : BaseActivity(), OnClickListener {
     private var address : String? = null
     private var area : String? = null
     private var city : String? = null
-    private var nic : String? = null
+    private var NIC : String? = null
     private var contact : String? = null
     private var specialNote : String? = null
 
@@ -185,7 +182,12 @@ class AddBooking : BaseActivity(), OnClickListener {
     private var mealOrderedGSON : String? = null
     private var featureReservationGSON : String? = null
 
-    private var addBookingReference : DatabaseReference = firebaseDatabaseReference
+    private var addBookingReference : DatabaseReference? = null
+
+    private var postUniqueKey : String? = null
+
+    //reserved rooms
+    private var roomReserve : RoomReserve? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,6 +195,7 @@ class AddBooking : BaseActivity(), OnClickListener {
 
         //go back
         btnCancel.setOnClickListener(this)
+        btnSubmit.setOnClickListener(this)
 
         //set room drop down
         setOptionsToRoomDropDown()
@@ -289,7 +292,7 @@ class AddBooking : BaseActivity(), OnClickListener {
     }
 
     private fun countRoom(){
-        val roomReserve = RoomReserve(RM1Status,RM2Status,RM3Status,RM4Status,RM5Status)
+        roomReserve = RoomReserve(RM1Status,RM2Status,RM3Status,RM4Status,RM5Status)
         val gson = Gson()
         roomReservationGSON = gson.toJson(roomReserve)
     }
@@ -336,7 +339,7 @@ class AddBooking : BaseActivity(), OnClickListener {
     private fun convertTimeToDate(time:Long): String{
         val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
         utc.timeInMillis = time
-        val format = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return format.format(utc.time)
     }
 
@@ -391,7 +394,7 @@ class AddBooking : BaseActivity(), OnClickListener {
         area = userArea.text.toString()
         city = userCity.text.toString()
         contact = userContact.text.toString()
-        nic = userNIC.text.toString()
+        NIC = userNIC.text.toString()
         specialNote = userSpecialNote.text.toString()
 
         //count room
@@ -405,27 +408,41 @@ class AddBooking : BaseActivity(), OnClickListener {
 
         //make database reference
         if (makeDataBaseReference()){
-            addBookingReference.setValue(SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON))
-                .addOnCompleteListener { task ->
+            addBookingReference?.setValue(uploadData(roomReserve!!))
+                ?.addOnCompleteListener { task ->
                     val result = task.result
                     if (task.isSuccessful){
+
+                        //close dialog
+                        loadingDialogClose()
+
                         Log.e(TAG, "Booking Successfully")
                         Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT)
                             .show()
+                        //move to manage booking
+                        navigateToManageBooking()
+
                     }else{
+                        //close dialog
+                        loadingDialogClose()
+
                         Log.e(TAG, "Failed to create booking.")
                         Snackbar.make(contentView, R.string.booking_data_upload_fail, Snackbar.LENGTH_SHORT)
                             .show()
                     }
                 }
-                .addOnFailureListener { task ->
+                ?.addOnFailureListener { task ->
                     if (task.message!=null){
+                        //close dialog
+                        loadingDialogClose()
                         Log.e(TAG, "data upload fail in addOnFailureListener")
                         Snackbar.make(contentView,task.message.toString(), Snackbar.LENGTH_SHORT)
                             .show()
                     }
                 }
         }else{
+            //close dialog
+            loadingDialogClose()
             Log.e(TAG, "data upload fail in database reference null")
             Snackbar.make(contentView,R.string.booking_data_upload_fail, Snackbar.LENGTH_SHORT)
                 .show()
@@ -433,7 +450,15 @@ class AddBooking : BaseActivity(), OnClickListener {
 
     }
 
+    private fun navigateToManageBooking(){
+        this.finish()
+        startActivity(Intent(this@AddBooking,ManageActivity::class.java))
+    }
+
     private fun validateData(){
+        //start loading dialog
+        loadingProgressDialog(this)
+
         if (bookingDate.text!=null){
             if (userFName.text!=null){
                 if (userContact.text!=null && verifyContact(userContact.text.toString())){
@@ -441,21 +466,29 @@ class AddBooking : BaseActivity(), OnClickListener {
                         //ready to submit
                         captureData()
                     }else{
+                        //close dialog
+                        loadingDialogClose()
                         Log.e(TAG, "Please input room count.")
                         Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
                             .show()
                     }
                 }else{
+                    //close dialog
+                    loadingDialogClose()
                     Log.e(TAG, "Please input valid contact.")
                     Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
                         .show()
                 }
             }else{
+                //close dialog
+                loadingDialogClose()
                 Log.e(TAG, "Please input valid user name.")
                 Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
                     .show()
             }
         }else{
+            //close dialog
+            loadingDialogClose()
             Log.e(TAG, "Please input valid date.")
             Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
                 .show()
@@ -463,15 +496,25 @@ class AddBooking : BaseActivity(), OnClickListener {
     }
 
     private fun makeDataBaseReference(): Boolean{
-        return if (firebaseAuth.currentUser!=null){
-            addBookingReference.child("Booking Details").child("Appointment Reservation").child(
-                firebaseUser!!.uid)
-            true
-        }else{
+        return if (firebaseAuth.currentUser != null) {
+            postUniqueKey = firebaseDatabaseReference.push().key.toString()
+            Log.d(TAG, "Post Key : $postUniqueKey")
+
+            return if (postUniqueKey != null) {
+                addBookingReference = firebaseDatabaseReference.child("Booking Details")
+                    .child("Appointment Reservation").child(postUniqueKey!!)
+                true
+            } else {
+                Log.e(TAG, "Database reference key null")
+                false
+            }
+        } else {
+            Log.e(TAG, "Firebase User Null")
             false
         }
     }
-    private fun uploadData(){
-        val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,nic,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON)
+    private fun uploadData(roomReserve: RoomReserve): SubmitBooking {
+       val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,NIC,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON,roomReserve)
+        return submitBooking
     }
 }

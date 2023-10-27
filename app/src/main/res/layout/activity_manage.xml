@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pendingBookingLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.ManageUI.ManageActivity">
@@ -63,14 +64,15 @@
         app:backgroundTint="@color/light_blue"
         app:srcCompat="@drawable/baseline_free_cancellation_24" />
 
-    <ExpandableListView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/topToolBar"
+        android:id="@+id/recycleBooking"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 
 </RelativeLayout>

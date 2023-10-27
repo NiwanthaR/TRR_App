@@ -78,4 +78,9 @@ dependencies {
 
     //GSON
     implementation ("com.google.code.gson:gson:2.10.1")
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation ("com.firebaseui:firebase-ui-database:8.0.2")
+
+
 }

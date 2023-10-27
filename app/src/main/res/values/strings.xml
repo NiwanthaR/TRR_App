@@ -27,4 +27,10 @@
     <string name="user_room_count">Please select room count</string>
     <string name="booking_data_upload_fail">Failed to create booking.</string>
     <string name="booking_successfully">Booking Successfully</string>
+
+    <!--Manage Activity-->
+    <string name="user_data_reference_null_error">Data loading Error (DRNE01).</string>
+
+    <!--QuickBookingActivity-->
+    <string name="booking_data_null">Data loading error..!</string>
 </resources>
