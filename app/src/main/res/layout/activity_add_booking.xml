@@ -212,27 +212,44 @@
                     android:id="@+id/cbRoom01"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="VVIP Room"/>
+                    android:enabled="false"
+                    android:text="Room Number 01"/>
                 <CheckBox
                     android:id="@+id/cbRoom02"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="VIP Room"/>
+                    android:enabled="false"
+                    android:text="Room Number 02"/>
                 <CheckBox
                     android:id="@+id/cbRoom03"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Sea View Room"/>
+                    android:enabled="false"
+                    android:text="Room Number 03"/>
                 <CheckBox
                     android:id="@+id/cbRoom04"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="Jungle View Room"/>
+                    android:enabled="false"
+                    android:text="Room Number 04"/>
                 <CheckBox
                     android:id="@+id/cbRoom05"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:text="Room Number 05"/>
+                <CheckBox
+                    android:id="@+id/cbRoom06"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
                     android:text="Mass Hall"/>
+                <CheckBox
+                    android:id="@+id/cbRoom07"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:enabled="false"
+                    android:text="Entire Hotel"/>
             </LinearLayout>
 
             <LinearLayout

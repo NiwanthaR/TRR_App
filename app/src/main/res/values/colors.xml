@@ -21,4 +21,5 @@
 
     <!--font colour splash -->
     <color name="app_splash_copyrights">#30424242</color>
+    <color name="white_mix_gray">#F5F7F8</color>
 </resources>

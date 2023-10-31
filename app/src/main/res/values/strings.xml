@@ -27,6 +27,7 @@
     <string name="user_room_count">Please select room count</string>
     <string name="booking_data_upload_fail">Failed to create booking.</string>
     <string name="booking_successfully">Booking Successfully</string>
+    <string name="user_need_to_select_date">Please select date range first.</string>
 
     <!--Manage Activity-->
     <string name="user_data_reference_null_error">Data loading Error (DRNE01).</string>

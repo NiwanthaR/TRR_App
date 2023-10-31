@@ -6,12 +6,17 @@ import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trr_app.support.LoadingDialog
+import com.example.trr_app.view.ManageUI.ManageActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
+import java.util.TimeZone
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -35,6 +40,9 @@ open class BaseActivity : AppCompatActivity() {
 
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog
+    //TAG Name
+    private val TAG: String
+            = BaseActivity::class.java.name
 
     open fun is_ValidNic(nic: String): Boolean {
         val p: Pattern = Pattern.compile("([0-9]{9}[a-z]{1})")
@@ -106,6 +114,45 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+
+    fun checkOverLeapOrNot(startDate:String, endDate:String, reserveStartDate:String,reserveEndDate:String):Boolean{
+        val s = SimpleDateFormat("yyyy-MM-dd")
+//        val s1 = s.parse(startDate!!)
+//        val e1 = s.parse(reserveStartDate)
+//        val s2 = s.parse(endDate!!)
+//        val e2 = s.parse(reserveEndDate)
+
+        val s1 = s.parse(reserveStartDate)
+        val e1 = s.parse(startDate!!)
+        val s2 = s.parse(reserveEndDate)
+        val e2 = s.parse(endDate!!)
+
+        print("Start date " + s.format(s1))
+        println("  End date " + s.format(e1))
+
+        print("Start date " + s.format(s2))
+        println("  End date " + s.format(e2))
+        if (s1.compareTo(s2) < 0 && e1.compareTo(s2) > 0 || s1.compareTo(e2) < 0 && e1.compareTo(e2) > 0 || s1.compareTo(
+                s2
+            ) < 0 && e1.compareTo(e2) > 0 || s1.compareTo(s2) > 0 && e1.compareTo(e2) < 0
+        ) {
+            println("They don't overlap")
+            Log.d(TAG, "They don't overlap")
+            return false
+        } else {
+            print("They overlap")
+            Log.e(TAG, "They overlap")
+            return true
+        }
+
+    }
+    fun convertTimesToDates(time:Long): String{
+        val utc = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        utc.timeInMillis = time
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return format.format(utc.time)
     }
 
 }

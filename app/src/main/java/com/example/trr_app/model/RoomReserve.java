@@ -3,18 +3,28 @@ package com.example.trr_app.model;
 import androidx.annotation.NonNull;
 
 public class RoomReserve {
-    public Boolean room01,room02,room03,room04,room05;
+    public Boolean room01,room02,room03,room04,room05,room06,room07;
 
     public RoomReserve() {
     }
 
-    public RoomReserve(Boolean room01, Boolean room02, Boolean room03, Boolean room04, Boolean room05) {
+    public RoomReserve(Boolean room01, Boolean room02, Boolean room03, Boolean room04, Boolean room05, Boolean room06, Boolean room07) {
         this.room01 = room01;
         this.room02 = room02;
         this.room03 = room03;
         this.room04 = room04;
         this.room05 = room05;
+        this.room06 = room06;
+        this.room07 = room07;
     }
+
+//    public RoomReserve(Boolean room01, Boolean room02, Boolean room03, Boolean room04, Boolean room05) {
+//        this.room01 = room01;
+//        this.room02 = room02;
+//        this.room03 = room03;
+//        this.room04 = room04;
+//        this.room05 = room05;
+//    }
 
     public Boolean getRoom01() {
         return room01;
@@ -56,6 +66,22 @@ public class RoomReserve {
         this.room05 = room05;
     }
 
+    public Boolean getRoom06() {
+        return room06;
+    }
+
+    public void setRoom06(Boolean room06) {
+        this.room06 = room06;
+    }
+
+    public Boolean getRoom07() {
+        return room07;
+    }
+
+    public void setRoom07(Boolean room07) {
+        this.room07 = room07;
+    }
+
     @Override
     public String toString() {
         return "RoomReserve{" +
@@ -64,6 +90,8 @@ public class RoomReserve {
                 ", room03=" + room03 +
                 ", room04=" + room04 +
                 ", room05=" + room05 +
+                ", room06=" + room06 +
+                ", room07=" + room07 +
                 '}';
     }
 }

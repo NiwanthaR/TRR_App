@@ -25,7 +25,10 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -96,6 +99,10 @@ class AddBooking : BaseActivity(), OnClickListener {
 
     private val cbRoom5 : CheckBox
         get() = findViewById(R.id.cbRoom05)
+    private val cbRoom6 : CheckBox
+        get() = findViewById(R.id.cbRoom06)
+    private val cbRoom7 : CheckBox
+        get() = findViewById(R.id.cbRoom07)
 
     //meal chips
     private val chip01 : Chip
@@ -131,12 +138,21 @@ class AddBooking : BaseActivity(), OnClickListener {
         get() = findViewById(R.id.btn_cancelBooked)
 
 
+    //room flag
+    private var roomFlag01 : Boolean = false
+    private var roomFlag02 : Boolean = false
+    private var roomFlag03 : Boolean = false
+    private var roomFlag04 : Boolean = false
+    private var roomFlag05 : Boolean = false
+
     //Room Availability
     private var RM1Status : Boolean = false
     private var RM2Status : Boolean = false
     private var RM3Status : Boolean = false
     private var RM4Status : Boolean = false
     private var RM5Status : Boolean = false
+    private var RM6Status : Boolean = false
+    private var RM7Status : Boolean = false
 
     //Meal status
     private var Cp1Status : Boolean = false
@@ -241,6 +257,13 @@ class AddBooking : BaseActivity(), OnClickListener {
         cbRoom5.setOnCheckedChangeListener { compoundButton, isChecked ->
             RM5Status = isChecked
         }
+        cbRoom6.setOnCheckedChangeListener { compoundButton, isChecked ->
+            RM6Status = isChecked
+        }
+        cbRoom7.setOnCheckedChangeListener { compoundButton, isChecked ->
+            RM7Status = isChecked
+        }
+
 
         //chip meals feedback
         chip01.setOnCheckedChangeListener { chip, ischecked ->
@@ -292,7 +315,7 @@ class AddBooking : BaseActivity(), OnClickListener {
     }
 
     private fun countRoom(){
-        roomReserve = RoomReserve(RM1Status,RM2Status,RM3Status,RM4Status,RM5Status)
+        roomReserve = RoomReserve(RM1Status,RM2Status,RM3Status,RM4Status,RM5Status,RM6Status,RM7Status)
         val gson = Gson()
         roomReservationGSON = gson.toJson(roomReserve)
     }
@@ -333,7 +356,24 @@ class AddBooking : BaseActivity(), OnClickListener {
             bookingDate.setText(convertTimeToDate(it.first) +" - "+convertTimeToDate(it.second))
             checkInDate = convertTimeToDate(it.first)
             checkOutDate = convertTimeToDate(it.second)
+
+            //add data load
+            loadBooking(checkInDate!!, checkOutDate!!)
+
+            //set enable
+            enableRoomCheckBox()
         }
+    }
+
+    private fun enableRoomCheckBox(){
+        //set enable to checkbox
+        cbRoom1.isEnabled = true
+        cbRoom2.isEnabled = true
+        cbRoom3.isEnabled = true
+        cbRoom4.isEnabled = true
+        cbRoom5.isEnabled = true
+        cbRoom6.isEnabled = true
+        cbRoom7.isEnabled = true
     }
 
     private fun convertTimeToDate(time:Long): String{
@@ -353,6 +393,7 @@ class AddBooking : BaseActivity(), OnClickListener {
             categoryList.add("3")
             categoryList.add("4")
             categoryList.add("5")
+            categoryList.add("6")
             categoryList.add("All")
 
             val adapter = ArrayAdapter(this, R.layout.list_item,categoryList)
@@ -381,6 +422,12 @@ class AddBooking : BaseActivity(), OnClickListener {
             Log.d(TAG, "Error" +e.message)
             Log.d(TAG, "Please couldn't able to load dropdown")
         }
+    }
+
+    private fun dateNotSelect(){
+        Log.e(TAG, "Still date range not select")
+        Snackbar.make(contentView, R.string.user_need_to_select_date, Snackbar.LENGTH_SHORT)
+            .show()
     }
 
     private fun captureData(){
@@ -516,5 +563,111 @@ class AddBooking : BaseActivity(), OnClickListener {
     private fun uploadData(roomReserve: RoomReserve): SubmitBooking {
        val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,NIC,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON,roomReserve)
         return submitBooking
+    }
+
+    //Dataloading
+    private fun loadBooking(startDate:String,endDate:String){
+        val databaseReference = firebaseDatabaseReference.child("Booking Details")
+            .child("Appointment Reservation")
+
+        var bookingList : ArrayList<SubmitBooking> = ArrayList<SubmitBooking>()
+        var overLeapList : ArrayList<SubmitBooking> = ArrayList<SubmitBooking>()
+
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                //clean list
+                bookingList.clear()
+                //load data
+                for (postSnapshot in snapshot.children) {
+                    val booking: SubmitBooking? = postSnapshot.getValue(SubmitBooking::class.java)
+                    if (booking!=null){
+                        Log.e(TAG, "Data loading success")
+                        bookingList.add(booking)
+
+                    }else{
+                        Log.e(TAG, "Data loading failed. booking is empty")
+                        Snackbar.make(contentView,R.string.booking_data_null, Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+
+                val listSize = bookingList.size
+
+                for (i in 0..< listSize){
+                    if (checkOverLeapOrNot(checkInDate!!,checkOutDate!!,bookingList[i].checkIn,bookingList[i].checkOut)){
+                        Log.d(TAG, "Date Overlapped add to array")
+                        overLeapList.add(bookingList[i])
+                    }else{
+                        Log.e(TAG, "Date Overlapped isnt add array")
+                    }
+                }
+
+                //send to check available rooms
+                checkAvailabilityRooms(overLeapList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                println("The read failed: " + databaseError.message)
+            }
+        })
+    }
+
+    private fun checkAvailabilityRooms(overLapList: ArrayList<SubmitBooking>){
+        val roomBookingList : ArrayList<RoomReserve> = ArrayList()
+        val listSize = overLapList.size
+
+        if (listSize!=0){
+            for (i in 0..<listSize){
+                roomBookingList.add(overLapList[i].roomReserve)
+            }
+
+            for (i in 0..<listSize){
+                if (roomBookingList[i].room01==true){
+                    roomFlag01 = true
+
+                }else if (roomBookingList[i].room02==true){
+                    roomFlag02 = true
+
+                }else if (roomBookingList[i].room03==true){
+                    roomFlag03 = true
+
+                }else if (roomBookingList[i].room04==true){
+                    roomFlag04 = true
+
+                }else if (roomBookingList[i].room05==true){
+                    roomFlag05 = true
+                }
+            }
+
+            setAvailability()
+        }
+    }
+
+    private fun setAvailability(){
+        if (roomFlag01){
+            cbRoom1.isChecked=true
+            cbRoom1.isClickable=false
+            cbRoom1.isEnabled = false
+            //cbRoom1.focusable=false
+        }
+        if (roomFlag02){
+            cbRoom2.isChecked=true
+            cbRoom2.isClickable=false
+            cbRoom2.isEnabled = false
+        }
+        if (roomFlag03){
+            cbRoom3.isChecked=true
+            cbRoom3.isClickable=false
+            cbRoom3.isEnabled = false
+        }
+        if (roomFlag04){
+            cbRoom4.isChecked=true
+            cbRoom4.isClickable=false
+            cbRoom4.isEnabled = false
+        }
+        if (roomFlag05){
+            cbRoom5.isChecked=true
+            cbRoom5.isClickable=false
+            cbRoom5.isEnabled = false
+        }
     }
 }

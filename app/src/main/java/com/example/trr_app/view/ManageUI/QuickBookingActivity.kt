@@ -39,6 +39,8 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
     private var roomFlag03 : Boolean = false
     private var roomFlag04 : Boolean = false
     private var roomFlag05 : Boolean = false
+    private var roomFlag06 : Boolean = false
+    private var roomFlag07 : Boolean = false
 
     //Material Card View
     private val rmCard01 : MaterialCardView
@@ -51,6 +53,10 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
         get() = findViewById(R.id.rm04Card)
     private val rmCard05 : MaterialCardView
         get() = findViewById(R.id.rm05Card)
+    private val rmCard06 : MaterialCardView
+        get() = findViewById(R.id.rm06Card)
+    private val rmCard07 : MaterialCardView
+        get() = findViewById(R.id.rm07Card)
 
     private val searchDateInput : TextInputEditText
         get() = findViewById(R.id.tv_searchDates)
@@ -165,18 +171,18 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
             for (i in 0..<listSize){
                 if (roomBookingList[i].room01==true){
                     roomFlag01 = true
-
                 }else if (roomBookingList[i].room02==true){
                     roomFlag02 = true
-
                 }else if (roomBookingList[i].room03==true){
                     roomFlag03 = true
-
                 }else if (roomBookingList[i].room04==true){
                     roomFlag04 = true
-
                 }else if (roomBookingList[i].room05==true){
                     roomFlag05 = true
+                }else if (roomBookingList[i].room06==true){
+                    roomFlag06 = true
+                }else if (roomBookingList[i].room07==true){
+                    roomFlag07 = true
                 }
             }
 
@@ -209,6 +215,16 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
             rmCard05.visibility = View.GONE
         }else{
             rmCard05.visibility = View.VISIBLE
+        }
+        if (roomFlag06){
+            rmCard06.visibility = View.GONE
+        }else{
+            rmCard06.visibility = View.VISIBLE
+        }
+        if (roomFlag07){
+            rmCard07.visibility = View.GONE
+        }else{
+            rmCard07.visibility = View.VISIBLE
         }
     }
 
