@@ -12,6 +12,7 @@ import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.support.QuickBookingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
 import com.example.trr_app.view.ManageUI.QuickBookingActivity
+import com.example.trr_app.view.SettingsUI.UserSettings
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
@@ -31,6 +32,9 @@ class Dashboard : BaseActivity(),OnClickListener {
     private val bookingHistoryCard : MaterialCardView
         get() = findViewById(R.id.historyCardView)
 
+    private val settingUICard : MaterialCardView
+        get() = findViewById(R.id.settings_card)
+
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +45,7 @@ class Dashboard : BaseActivity(),OnClickListener {
         quickBookingDashboard.setOnClickListener(this)
         bookingHistoryCard.setOnClickListener(this)
         userLogoutDashboard.setOnClickListener(this)
+        settingUICard.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
@@ -49,11 +54,16 @@ class Dashboard : BaseActivity(),OnClickListener {
             R.id.layoutQuickBooking ->moveToQuickBooking()
             R.id.historyCardView -> loadingProgressDialog(this)
             R.id.userLogoutLayout -> userSignOut()
+            R.id.settings_card -> loadSettingsCard()
         }
     }
 
     private fun moveToQuickBooking(){
         startActivity(Intent(this@Dashboard,QuickBookingActivity::class.java))
+    }
+
+    private fun loadSettingsCard(){
+        startActivity(Intent(this@Dashboard,UserSettings::class.java))
     }
 
     private fun showBottomDialog(){

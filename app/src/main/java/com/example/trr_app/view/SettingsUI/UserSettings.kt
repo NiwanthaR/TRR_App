@@ -1,5 +1,6 @@
 package com.example.trr_app.view.SettingsUI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,19 +14,24 @@ import com.google.android.material.card.MaterialCardView
 
 class UserSettings : BaseActivity(), OnClickListener {
 
-    private val btn_changePassword : MaterialCardView
-     = findViewById(R.id.changePassword_Layout)
+    private val btnChangePassword : MaterialCardView
+        get() = findViewById(R.id.changePassword_Layout)
+
+    private val btnManageUser : MaterialCardView
+        get() = findViewById(R.id.manageUserCard)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_settings)
 
-        btn_changePassword.setOnClickListener(this)
+        btnChangePassword.setOnClickListener(this)
+        btnManageUser.setOnClickListener(this)
     }
 
     override fun onClick(view: View?) {
         when(view?.id){
-            R.id.changePassword_Layout -> displayPasswordTab()
+            //R.id.changePassword_Layout -> displayPasswordTab()
+            R.id.manageUserCard -> displayManageUserLayout()
         }
     }
 
@@ -63,6 +69,10 @@ class UserSettings : BaseActivity(), OnClickListener {
 
             // a show method to display a dialog.
             dialog.show()
+    }
+
+    private fun displayManageUserLayout(){
+        startActivity(Intent(this@UserSettings,ManageUser::class.java))
     }
 
 

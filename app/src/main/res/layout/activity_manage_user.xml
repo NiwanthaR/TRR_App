@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/userDashboardLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.SettingsUI.ManageUser">
@@ -50,132 +51,14 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/usersRecycler"
         android:layout_below="@id/topToolBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:orientation="vertical">
-
-        <com.google.android.material.card.MaterialCardView
-            app:cardBackgroundColor="@color/light_blue"
-            app:strokeColor="@color/light_blue"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_marginStart="10dp"
-                android:layout_margin="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_toEndOf="@id/userProfileImg"
-                    android:id="@+id/textUserName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textSize="20sp"
-                    android:fontFamily="@font/rubik_medium"
-                    android:text="Andrew Phytosce"/>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/userProfileImg"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:src="@drawable/ic_man_icon"/>
-
-                <TextView
-                    android:layout_below="@id/textUserName"
-                    android:layout_toEndOf="@id/userProfileImg"
-                    android:id="@+id/userPositiontxt"
-                    android:fontFamily="@font/rubik_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textSize="15sp"
-                    android:text="Position :"/>
-
-                <TextView
-                    android:layout_below="@id/textUserName"
-                    android:layout_toEndOf="@id/userPositiontxt"
-                    android:id="@+id/userPosition"
-                    android:fontFamily="@font/rubik_light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textSize="15sp"
-                    android:text="Admin"/>
-
-                <TextView
-                    android:layout_below="@id/userPosition"
-                    android:layout_toEndOf="@id/userProfileImg"
-                    android:id="@+id/userLastLoginTxt"
-                    android:fontFamily="@font/rubik_medium"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:textSize="15sp"
-                    android:text="Last Login :"/>
-
-                <TextView
-                    android:layout_below="@id/userPositiontxt"
-                    android:layout_toEndOf="@id/userLastLoginTxt"
-                    android:id="@+id/userLastLogin"
-                    android:fontFamily="@font/rubik_light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:textSize="15sp"
-                    android:text="2023/09/20"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/userProfileImg"
-                    android:layout_below="@id/userLastLoginTxt"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/btn_removeUser"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="40dp"
-                        android:text="Remove"
-                        android:layout_marginEnd="10dp"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:fontFamily="@font/rubik_medium"
-                        />
-
-
-                    <Button
-                        android:id="@+id/btn_editeUser"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="10dp"
-                        android:layout_height="40dp"
-                        android:text="Edit"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:fontFamily="@font/rubik_medium"
-                        />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/dot_menu"/>
-
-            </RelativeLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-    </LinearLayout>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"/>
 
 </RelativeLayout>

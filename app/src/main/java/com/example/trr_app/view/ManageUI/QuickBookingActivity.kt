@@ -403,7 +403,6 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
             Log.e(TAG, "They overlap")
             return true
         }
-
     }
 
     private fun convertTimeToDate(time:Long): String{

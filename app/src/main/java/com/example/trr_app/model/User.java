@@ -3,6 +3,9 @@ package com.example.trr_app.model;
 public class User {
     public String userName,userCategory,userContact,userEmail;
 
+    public User() {
+    }
+
     public User(String userName, String userCategory, String userContact, String userEmail) {
         this.userName = userName;
         this.userCategory = userCategory;
@@ -40,5 +43,15 @@ public class User {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", userCategory='" + userCategory + '\'' +
+                ", userContact='" + userContact + '\'' +
+                ", userEmail='" + userEmail + '\'' +
+                '}';
     }
 }

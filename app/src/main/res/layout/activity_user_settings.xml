@@ -105,6 +105,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/manageUserCard"
             android:layout_below="@id/topToolBar"
             android:layout_width="match_parent"
             android:layout_height="80dp"
