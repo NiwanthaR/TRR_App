@@ -36,35 +36,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/userProfilePic"
-                        android:src="@drawable/ic_man_icon"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/userProfileCard"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="15dp"
                         android:layout_width="60dp"
-                        android:layout_height="60dp"/>
+                        android:layout_height="60dp"
+                        app:cardCornerRadius="250dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            app:cardCornerRadius="250dp"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:id="@+id/userProfilePic"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:src="@drawable/ic_man_icon"
+                                android:scaleType="centerCrop"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
-                        android:id="@+id/userName"
+                        android:id="@+id/dashboardUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Unknown User"
                         android:fontFamily="@font/rubik_medium"
                         android:textColor="@color/black"
-                        android:layout_toEndOf="@id/userProfilePic"
+                        android:layout_toEndOf="@id/userProfileCard"
                         android:textSize="25sp"
                         android:layout_marginTop="15dp"
                         android:layout_marginStart="10dp"/>
 
                     <TextView
+                        android:id="@+id/dashboardWish"
                         android:fontFamily="@font/rubik_medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/userName"
+                        android:layout_below="@id/dashboardUserName"
                         android:layout_marginStart="10dp"
                         android:textColor="@color/black"
-                        android:layout_marginTop="3dp"
-                        android:layout_toEndOf="@id/userProfilePic"
+                        android:layout_marginTop="-8dp"
+                        android:layout_toEndOf="@id/userProfileCard"
                         android:text="Good Morning"/>
 
 

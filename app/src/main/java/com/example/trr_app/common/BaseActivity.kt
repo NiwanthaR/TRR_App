@@ -1,12 +1,19 @@
 package com.example.trr_app.common
 
+import android.app.AlertDialog
+import android.content.ClipDescription
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.trr_app.R
 import com.example.trr_app.support.LoadingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -153,6 +160,40 @@ open class BaseActivity : AppCompatActivity() {
         utc.timeInMillis = time
         val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return format.format(utc.time)
+    }
+
+    fun customLogout(title:String,description: String,accept:Boolean,decline:Boolean){
+        val builder = AlertDialog.Builder(this, R.style.CustomAlertDialog)
+            .create()
+        val view = layoutInflater.inflate(R.layout.custom_alert,null)
+
+        val acceptBtnLayout = view.findViewById<LinearLayout>(R.id.acceptLayout)
+        val declineBtnLayout = view.findViewById<LinearLayout>(R.id.declineLayout)
+
+        if (accept){
+            acceptBtnLayout.visibility = View.GONE
+        }
+
+        if (decline){
+            declineBtnLayout.visibility = View.GONE
+        }
+
+        val textTitle = view.findViewById<TextView>(R.id.customAlertTitle)
+        textTitle.text = title
+        val textDescription = view.findViewById<TextView>(R.id.customAlertDescription)
+        textDescription.text = description
+
+        val  buttonDecline = view.findViewById<MaterialButton>(R.id.dialogDismiss_button)
+        builder.setView(view)
+        buttonDecline.setOnClickListener {
+            builder.dismiss()
+        }
+        val buttonAccept = view.findViewById<MaterialButton>(R.id.dialogAgree_button)
+        buttonAccept.setOnClickListener(View.OnClickListener {
+
+        })
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
     }
 
 }
