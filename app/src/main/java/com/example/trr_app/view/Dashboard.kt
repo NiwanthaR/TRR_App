@@ -13,7 +13,9 @@ import android.widget.TextView
 import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.User
+import com.example.trr_app.view.ManageUI.AddQuickBooking
 import com.example.trr_app.view.ManageUI.ManageActivity
+import com.example.trr_app.view.ManageUI.ManageBookingActivity
 import com.example.trr_app.view.ManageUI.QuickBookingActivity
 import com.example.trr_app.view.SettingsUI.UserSettings
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -83,7 +85,7 @@ class Dashboard : BaseActivity(),OnClickListener {
 
     override fun onClick(view: View?) {
         when(view?.id){
-            R.id.manageUILayout -> startActivity(Intent(this,ManageActivity::class.java))
+            R.id.manageUILayout -> startActivity(Intent(this,ManageBookingActivity::class.java))
             R.id.layoutQuickBooking ->moveToQuickBooking()
             R.id.historyCardView -> loadingProgressDialog(this)
             R.id.userLogoutLayout -> userSignOut()
@@ -92,29 +94,11 @@ class Dashboard : BaseActivity(),OnClickListener {
     }
 
     private fun moveToQuickBooking(){
-        startActivity(Intent(this@Dashboard,QuickBookingActivity::class.java))
+        startActivity(Intent(this@Dashboard,AddQuickBooking::class.java))
     }
 
     private fun loadSettingsCard(){
         startActivity(Intent(this@Dashboard,UserSettings::class.java))
-    }
-
-    private fun showBottomDialog(){
-            val bottomSheetDialog = BottomSheetDialog(this)
-            bottomSheetDialog.setContentView(R.layout.dialog_quick_booking)
-////
-////            //val copy = bottomSheetDialog.findViewById<LinearLayout>(R.id.copyLinearLayout)
-////            //val share = bottomSheetDialog.findViewById<LinearLayout>(R.id.shareLinearLayout)
-////            //val upload = bottomSheetDialog.findViewById<LinearLayout>(R.id.uploadLinearLayout)
-////            //val download = bottomSheetDialog.findViewById<LinearLayout>(R.id.download)
-////            //val delete = bottomSheetDialog.findViewById<LinearLayout>(R.id.delete)
-        val standardBottomSheetBehavior = BottomSheetBehavior.from(bottomSheetDialog.findViewById<FrameLayout>(R.id.quickBookingFrameLayout)!!)
-        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-        bottomSheetDialog.show()
-
-        //val bottomSheet = QuickBookingDialog()
-        //bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
-
     }
 
     private fun userSignOut(){

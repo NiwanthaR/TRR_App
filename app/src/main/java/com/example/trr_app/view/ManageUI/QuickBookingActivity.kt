@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -16,16 +17,19 @@ import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -36,6 +40,9 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
 
     private val TAG: String
             = ManageActivity::class.java.name
+
+    private val quickBooking : FloatingActionButton
+        get() = findViewById(R.id.floating_btnQuickBooking)
 
     //room flag
     private var roomFlag01 : Boolean = false
@@ -136,6 +143,18 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
     private var startDate:String? = null
     private var endDate:String? = null
 
+    //bottom sheet variable
+    private var userName : String? = null
+    private var userContact : String? = null
+
+    //dialog
+    var Rm1 = false; var Rm2 = false;
+    var Rm3 = false;
+    var Rm4 = false;
+    var Rm5 = false;
+    var Rm6 = false;
+    var Rm7 = false
+
     private val contentView : RelativeLayout
         get() = findViewById(R.id.quickBookingGuid)
 
@@ -149,6 +168,7 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
         setContentView(R.layout.activity_quick_booking)
 
         searchDateInput.setOnClickListener(this)
+        quickBooking.setOnClickListener(this)
 
         //load room data
         loadRoomData()
@@ -338,37 +358,44 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
     private fun setAvailability(){
         if (roomFlag01){
             rmCard01.visibility = View.GONE
+            Rm1 = true
         }else{
             rmCard01.visibility = View.VISIBLE
         }
         if (roomFlag02){
             rmCard02.visibility = View.GONE
+            Rm2 = true
         }else{
             rmCard02.visibility = View.VISIBLE
         }
         if (roomFlag03){
             rmCard03.visibility = View.GONE
+            Rm3 = true
         }else{
             rmCard03.visibility = View.VISIBLE
         }
         if (roomFlag04){
             rmCard04.visibility = View.GONE
+            Rm4 = true
         }else{
             rmCard04.visibility = View.VISIBLE
         }
         if (roomFlag05){
             rmCard05.visibility = View.GONE
+            Rm5 = true
         }else{
             rmCard05.visibility = View.VISIBLE
         }
         if (roomFlag06){
             rmCard06.visibility = View.GONE
+            Rm6 = true
         }else{
             rmCard06.visibility = View.VISIBLE
         }
         if (roomFlag07){
             rmCard07.visibility = View.GONE
             roomLoadLayout.visibility = View.GONE
+            Rm7 = true
         }else{
             rmCard07.visibility = View.VISIBLE
         }
@@ -415,7 +442,61 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
     override fun onClick(view: View) {
         when(view.id){
             R.id.tv_searchDates -> showDatePicker()
+            R.id.floating_btnQuickBooking -> checkAvailability()
         }
+    }
+
+    private fun checkNull(userName:String,contact:String,headCount:String,specialNote:String):Boolean{
+        return userName!=null || verifyContact(contact) || headCount!=null || headCount!="0"
+    }
+
+    private fun checkAvailability(){
+        if (startDate!=null && endDate!=null){
+            showBottomDialog()
+        }else{
+            Log.e(TAG, "Date not selected")
+            Snackbar.make(contentView,R.string.date_not_selected, Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun displayCheckBox(){
+
+    }
+
+    private fun showBottomDialog() {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        bottomSheetDialog.setContentView(R.layout.dialog_quick_booking)
+
+        val userName = bottomSheetDialog.findViewById<TextInputEditText>(R.id.quickCustomerName)
+        bottomSheetDialog.findViewById<TextInputEditText>(R.id.quickBookingDate)
+            ?.setText("$startDate-$endDate")
+        val contactNumber = bottomSheetDialog.findViewById<TextInputEditText>(R.id.customerContact)
+        val headCount = bottomSheetDialog.findViewById<TextInputEditText>(R.id.headCount)
+        val specialNote = bottomSheetDialog.findViewById<TextInputEditText>(R.id.quickSpecialNote)
+
+        bottomSheetDialog.findViewById<MaterialButton>(R.id.btnQuickSubmit)
+            ?.setOnClickListener(OnClickListener {
+                //validate data
+                if (userName != null || contactNumber != null || headCount != null || specialNote != null) {
+                    if (checkNull(userName?.text.toString(),contactNumber?.text.toString(),headCount?.text.toString(),specialNote?.text.toString())){
+
+                    }else{
+
+                    }
+                }else{
+                    Log.e(TAG, "Date not filled")
+                    Snackbar.make(contentView,R.string.data_not_filled, Snackbar.LENGTH_SHORT).show()
+                }
+            })
+
+        val standardBottomSheetBehavior =
+            BottomSheetBehavior.from(bottomSheetDialog.findViewById<FrameLayout>(R.id.quickBookingFrameLayout)!!)
+        standardBottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetDialog.show()
+
+        //val bottomSheet = QuickBookingDialog()
+        //bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
+
     }
 
 }

@@ -22,7 +22,13 @@
     <!--font colour splash -->
     <color name="app_splash_copyrights">#30424242</color>
     <color name="white_mix_gray">#F5F7F8</color>
+    <color name="card_mix_colour">#9900A9FF</color>
+    <color name="red_colour">#FE0000</color>
 
     <color name="decline_btn">#FF6D60</color>
     <color name="accept_btn">#98D8AA</color>
+    <color name="light_cream">#EBE3D5</color>
+    <color name="light_purples">#DFCCFB</color>
+    <color name="light_pink">#FFC7EA</color>
+    <color name="light_dull_green">#D3D04F</color>
 </resources>

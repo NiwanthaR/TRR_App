@@ -13,6 +13,15 @@
         android:theme="@style/Theme.TRR_App"
         tools:targetApi="31">
         <activity
+            android:name=".view.ManageUI.AddQuickBooking"
+            android:exported="false" />
+        <activity
+            android:name=".view.ManageUI.CompleteQuickBooking"
+            android:exported="false" />
+        <activity
+            android:name=".view.ManageUI.ManageBookingActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ManageUI.QuickBookingActivity"
             android:exported="false" />
         <activity

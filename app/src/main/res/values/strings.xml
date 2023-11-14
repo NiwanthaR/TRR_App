@@ -34,4 +34,9 @@
 
     <!--QuickBookingActivity-->
     <string name="booking_data_null">Data loading error..!</string>
+    <string name="date_not_selected">Please Select Date First.</string>
+    <string name="data_not_filled">Data not full filled.</string>
+
+    <!--addBookingActivity-->
+    <string name="dateNotFixed">Date not select correctly.</string>
 </resources>
