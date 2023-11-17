@@ -19,13 +19,16 @@ import com.example.trr_app.adaptor.UserAdaptor
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.holders.BookingViewHolder
 import com.example.trr_app.holders.RoomViewHolder
+import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.Room
 import com.example.trr_app.model.RoomDetails
 import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
 import com.example.trr_app.model.User
+import com.example.trr_app.support.QuickBookingDialog
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -36,6 +39,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 
@@ -54,7 +58,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private val TAG: String = BaseActivity::class.java.name
 
     private val contentView : RelativeLayout
-        get() = findViewById(R.id.addQuickBookingLayout)
+        get() = findViewById(R.id.addQuickBookingLayoutContent)
 
     //database Reference
     private var bookingDatabaseReference  = firebaseDatabaseReference
@@ -64,7 +68,10 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private var firebaseRecyclerOptions : FirebaseRecyclerOptions<RoomDetails>? = null
     private var adapter: FirebaseRecyclerAdapter<RoomDetails, RoomViewHolder>? = null
 
-    private lateinit var roomAdaptor : RoomAdaptor
+    //database reference
+    private var databaseReference : DatabaseReference = firebaseDatabaseReference
+
+    private var roomAdaptor : RoomAdaptor? = null
 
     private var bookingList : ArrayList<SubmitBooking> = ArrayList<SubmitBooking>()
     private var overLeapList : ArrayList<SubmitBooking> = ArrayList<SubmitBooking>()
@@ -73,10 +80,14 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private var startDate : String? =null
     private var endDate : String? =null
     private var today : String? =null
+    private var selectDateRange : String? = null
 
     //room list
     val roomList : ArrayList<Room> = ArrayList()
     val bookedList = ArrayList<String>()
+
+    var selectedRoomList : ArrayList<Room> = ArrayList()
+
 
     //room flag
     private var R001 : Boolean = false
@@ -90,13 +101,18 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_quick_booking)
 
+       //load
+        loadEssentialData()
+        //set Onclick
+        dateRangeInput.setOnClickListener(this)
+        addNewQuickBook.setOnClickListener(this)
+    }
+
+    private fun loadEssentialData(){
         //load room
         loadDataRoom()
         //hide floating
         addNewQuickBook.isVisible = false
-        //set Onclick
-        dateRangeInput.setOnClickListener(this)
-        addNewQuickBook.setOnClickListener(this)
     }
 
     fun showBookingBtn(show:Boolean){
@@ -142,19 +158,77 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e(TAG, "Data loading failed. room is empty"+error.details)
             }
 
         })
 
     }
 
-    private fun getSelectRooms(){
-        val selectItem = roomAdaptor.getSelectedList()
-        println(selectItem)
+    private fun getSelectRooms():RoomReserve?{
 
-        //navigate to Quick Booking
+        //roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList){ show->showBookingBtn(show)}
+        //clear
+        clearRM()
+        if (roomAdaptor!=null){
 
+            val selectItem = roomAdaptor!!.getSelectedList()
+            println(selectItem)
+
+            //navigate to Quick Booking
+            val count = selectItem.size
+            val roomList = ArrayList<String>()
+
+            for (i in 0..<count) {
+                roomList.add(selectItem[i].room_unic_code)
+            }
+
+            for (i in 0..<count) {
+                if ( roomList[i]=="R001"){
+                    R001 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R002"){
+                    R002 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R003"){
+                    R003 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R004"){
+                    R004 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R005"){
+                    R005 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R006"){
+                    R006 = true
+                    roomList.removeAt(i)
+                }
+                if ( roomList[i]=="R007"){
+                    R007 = true
+                    roomList.removeAt(i)
+                }
+            }
+            return RoomReserve(R001,R002,R003,R004,R005,R006,R007)
+            println("X")
+        }else{
+            return RoomReserve(false,false,false,false,false,false,false)
+            println("y")
+        }
+    }
+
+    private fun clearRM(){
+        R001=false
+        R002=false
+        R003=false
+        R004=false
+        R005=false
+        R006=false
+        R007=false
     }
     private fun loadDataBooking(startDate :String, endDate:String,toDay:String){
 
@@ -287,6 +361,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
         picker.addOnPositiveButtonClickListener {
             dateRangeInput.setText(convertTimesToDates(it.first) +" - "+convertTimesToDates(it.second))
+            //selectDateRange = convertTimesToDates(it.first) +" - "+convertTimesToDates(it.second)
             startDate = convertTimesToDates(it.first)
             endDate = convertTimesToDates(it.second)
             today = convertTimesToDates(MaterialDatePicker.todayInUtcMilliseconds())
@@ -304,7 +379,61 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     override fun onClick(view: View?) {
         when(view?.id){
             R.id.et_quickSearchDates -> showDatePicker()
-            R.id.addNewQuickBooking -> getSelectRooms()
+            R.id.addNewQuickBooking -> showBottomDialog()
         }
+    }
+
+    fun captureQuickBookData(name:String?,contact:String?,headCount:String?,specialNote:String?,room:RoomReserve?){
+        //get unique que
+        val postUniqueKey = firebaseDatabaseReference.push().key.toString()
+        Log.d(TAG, "Post Key : $postUniqueKey")
+
+        //set path
+        databaseReference = firebaseDatabaseReference.child("Booking Details").child("Appointment Reservation")
+            .child(postUniqueKey)
+
+        val x = startDate
+        val y = endDate
+
+        //get room Details
+        //val room = getSelectRooms()
+        //get date range
+        selectDateRange = dateRangeInput.text.toString()
+
+        if (room!=null){
+            //saveData
+            databaseReference.setValue(QuickBooking(name,selectDateRange,contact,headCount,specialNote,"Temporary",room))
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful){
+                        //Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT)
+                           // .show()
+
+                        //reset page
+                        loadEssentialData()
+
+                    }else{
+                        Log.e(TAG, "Data upload not success.")
+                        Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+                            .show()
+                    }
+
+                }.addOnFailureListener {OnFailureListener{
+                    Log.e(TAG, "Data upload not success.")
+                    Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+                        .show()
+                }
+                }
+        }else{
+            Log.e(TAG, "Selected room null")
+            Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+                .show()
+        }
+    }
+
+    private fun showBottomDialog(){
+
+        val bottomSheet = QuickBookingDialog(roomAdaptor)
+        bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
+
     }
 }

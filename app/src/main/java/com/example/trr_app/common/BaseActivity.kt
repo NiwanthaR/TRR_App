@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trr_app.R
+import com.example.trr_app.model.Room
 import com.example.trr_app.support.LoadingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
 import com.google.android.material.button.MaterialButton
@@ -44,7 +45,6 @@ open class BaseActivity : AppCompatActivity() {
     val firebaseStorageReference : StorageReference = firebaseStorage.reference
     //Firebase User Data Location
     var userDatabaseReference : DatabaseReference? = null
-
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog
     //TAG Name
