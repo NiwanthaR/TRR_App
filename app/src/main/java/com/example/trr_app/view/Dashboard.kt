@@ -53,8 +53,6 @@ class Dashboard : BaseActivity(),OnClickListener {
     private val settingUICard : MaterialCardView
         get() = findViewById(R.id.settings_card)
 
-    private lateinit var bottomSheetBehavior: BottomSheetBehavior<LinearLayout>
-
     //database reference
     private var databasereference = firebaseDatabaseReference
 

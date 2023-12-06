@@ -42,13 +42,75 @@
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/backIcon"
                     android:fontFamily="@font/rubik_medium"
-                    android:text="Quick Dashboard"
+                    android:text="Complete"
                     android:textSize="25sp" />
+
+                <Button
+                    android:layout_alignParentEnd="true"
+                    android:id="@+id/textButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search"
+                    android:layout_marginRight="20sp"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    />
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/searchByIDLayout"
+        android:layout_below="@id/topToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="4">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:startIconDrawable="@drawable/calendar_month_24"
+                app:endIconMode="custom"
+                app:endIconDrawable="@drawable/baseline_search_24"
+                android:focusable="false"
+                android:hint="Search Booking Dates">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_quickSearchDates"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quickBookRecycle"
+        android:layout_below="@id/searchByIDLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"/>
 
 
 </RelativeLayout>

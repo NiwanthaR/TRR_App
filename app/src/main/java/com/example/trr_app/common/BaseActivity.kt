@@ -3,6 +3,7 @@ package com.example.trr_app.common
 import android.app.AlertDialog
 import android.content.ClipDescription
 import android.content.Context
+import android.media.MediaPlayer.OnCompletionListener
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
@@ -14,11 +15,15 @@ import com.example.trr_app.R
 import com.example.trr_app.model.Room
 import com.example.trr_app.support.LoadingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
@@ -41,12 +46,16 @@ open class BaseActivity : AppCompatActivity() {
     var firebaseUser : FirebaseUser? = firebaseAuth.currentUser
     //Firebase database reference
     val firebaseDatabaseReference : DatabaseReference = firebaseDatabase.reference.child("TRRApp")
+    //OrderID Reference
+    val orderIDReference : DatabaseReference = firebaseDatabaseReference.child("Store Value").child("OrderID")
     //Firebase Storage reference
     val firebaseStorageReference : StorageReference = firebaseStorage.reference
     //Firebase User Data Location
     var userDatabaseReference : DatabaseReference? = null
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog
+    //order id
+    var customerOrderID: Int = 0
     //TAG Name
     private val TAG: String
             = BaseActivity::class.java.name
@@ -121,6 +130,44 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+    fun getOrderID():Int{
+
+        orderIDReference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.value!=null){
+                    customerOrderID =
+                    Log.e(TAG,"Ongoing order id is."+snapshot.value)
+
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                    Log.e(TAG,"Order id couldnt load.")
+            }
+
+        })
+        return customerOrderID
+    }
+
+    fun increaseOrderID():Int{
+        orderIDReference.setValue(customerOrderID).addOnCompleteListener { OnCompletionListener{
+
+        } }.addOnFailureListener { OnFailureListener{
+
+        } }
+
+        return customerOrderID
+    }
+
+    fun removeOrderID():Boolean{
+        val state = false
+        orderIDReference.removeValue().addOnCompleteListener { OnCompletionListener{
+
+        } }.addOnFailureListener { OnFailureListener{
+
+        } }
+        return state
     }
 
 

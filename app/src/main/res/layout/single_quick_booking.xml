@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/quickBook_singleView"
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+   <com.google.android.material.card.MaterialCardView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:strokeColor="@color/dark_dull_ash"
+       android:backgroundTint="@color/dark_dull_ash">
+
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <TextView
+               android:id="@+id/dateRange_title"
+               android:layout_marginTop="15dp"
+               android:layout_marginStart="10dp"
+               android:layout_alignParentStart="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:textColor="@color/black"
+               android:fontFamily="@font/merriweather_regular"
+               android:text="Date Range "/>
+
+           <TextView
+               android:layout_below="@id/dateRange_title"
+               android:layout_marginStart="10dp"
+               android:id="@+id/dateRange_txt"
+               android:fontFamily="@font/rubik_light"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="2023/11/30 - 2023/12/02"/>
+
+           <LinearLayout
+               android:id="@+id/detailLayout2"
+               android:layout_marginStart="10dp"
+               android:layout_below="@id/dateRange_txt"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_marginTop="5dp">
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/merriweather_regular"
+                       android:textColor="@color/black"
+                       android:text="Customer Name"/>
+
+                   <TextView
+                       android:id="@+id/customerName_txt"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/rubik_light"
+                       android:text="Dilshan Rathnayaka"/>
+
+               </LinearLayout>
+
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:orientation="vertical"
+                   android:layout_height="wrap_content">
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textColor="@color/black"
+                       android:fontFamily="@font/merriweather_regular"
+                       android:text="Customer Contact"/>
+
+                   <TextView
+                       android:id="@+id/customerContact_txt"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:fontFamily="@font/rubik_light"
+                       android:text="0714565852"/>
+
+               </LinearLayout>
+
+           </LinearLayout>
+
+           <com.google.android.material.button.MaterialButton
+               android:layout_below="@id/detailLayout2"
+               style="@style/Widget.MaterialComponents.Button.TextButton"
+               android:text="Click Here"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"/>
+       </RelativeLayout>
+
+   </com.google.android.material.card.MaterialCardView>
+
+</RelativeLayout>

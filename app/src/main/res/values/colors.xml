@@ -31,4 +31,6 @@
     <color name="light_purples">#DFCCFB</color>
     <color name="light_pink">#FFC7EA</color>
     <color name="light_dull_green">#D3D04F</color>
+    <color name="light_dull_ash">#F5F7F8</color>
+    <color name="dark_dull_ash">#F5F5F5</color>
 </resources>
