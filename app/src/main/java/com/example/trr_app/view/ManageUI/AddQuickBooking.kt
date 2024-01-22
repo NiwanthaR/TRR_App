@@ -1,5 +1,6 @@
 package com.example.trr_app.view.ManageUI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -26,6 +27,7 @@ import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
 import com.example.trr_app.model.User
 import com.example.trr_app.support.QuickBookingDialog
+import com.example.trr_app.view.Dashboard
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.gms.tasks.OnFailureListener
@@ -110,9 +112,12 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     private fun loadEssentialData(){
         //load room
-        loadDataRoom()
+        //loadDataRoom()
         //hide floating
-        addNewQuickBook.isVisible = false
+        //addNewQuickBook.isVisible = false
+
+        Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT).show()
+        startActivity(Intent(this,Dashboard::class.java))
     }
 
     fun showBookingBtn(show:Boolean){
@@ -383,7 +388,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         }
     }
 
-    fun captureQuickBookData(name:String?,contact:String?,headCount:String?,specialNote:String?,room:RoomReserve?){
+    fun captureQuickBookData(name:String?,contact:String?,headCount:String?,specialNote:String?,room:RoomReserve?,startDate: String?,endDate:String?,dateRange:String?){
         //get unique que
         val postUniqueKey = firebaseDatabaseReference.push().key.toString()
         Log.d(TAG, "Post Key : $postUniqueKey")
@@ -392,17 +397,9 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         databaseReference = firebaseDatabaseReference.child("Booking Details").child("Appointment Reservation")
             .child(postUniqueKey)
 
-        val x = startDate
-        val y = endDate
-
-        //get room Details
-        //val room = getSelectRooms()
-        //get date range
-        selectDateRange = dateRangeInput.text.toString()
-
         if (room!=null){
             //saveData
-            databaseReference.setValue(QuickBooking(name,selectDateRange,contact,headCount,specialNote,"Temporary",room))
+            databaseReference.setValue(QuickBooking(name,dateRange,startDate,endDate,contact,headCount,specialNote,"Temporary",room))
                 .addOnCompleteListener {task ->
                     if (task.isSuccessful){
                         //Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT)
@@ -432,7 +429,11 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     private fun showBottomDialog(){
 
-        val bottomSheet = QuickBookingDialog(roomAdaptor)
+        sharedPreferences.saves(this,"QUICK_BOOK_START_DATE",startDate)
+        sharedPreferences.saves(this,"QUICK_BOOK_START_END",endDate)
+        val dateRange = dateRangeInput.text.toString()
+
+        val bottomSheet = QuickBookingDialog(roomAdaptor,startDate,endDate,dateRange)
         bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
 
     }

@@ -17,7 +17,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 
-class QuickBookingDialog(roomAdaptor: RoomAdaptor?): BottomSheetDialogFragment() {
+class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:String?,dateRange:String?): BottomSheetDialogFragment() {
 
     private lateinit var addQuickBooking: Unit
     private lateinit var customerName : TextInputEditText
@@ -30,6 +30,11 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?): BottomSheetDialogFragment()
     private var count: String? = null
     private var contact : String?  = null
     private var note: String? = null
+
+    //Date
+    private var startDate: String? = startDate
+    private var endtDate: String? = endDate
+    private var dateRange: String? = dateRange
 
     //room flag
     private var R001 : Boolean = false
@@ -95,7 +100,7 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?): BottomSheetDialogFragment()
 
         if (contact!=null){
             val room = getSelectRooms()
-            addQuickBooking = AddQuickBooking().captureQuickBookData(name,contact,count,note,room)
+            addQuickBooking = AddQuickBooking().captureQuickBookData(name,contact,count,note,room,startDate,endtDate,dateRange)
             dialog.dismiss()
         }
     }

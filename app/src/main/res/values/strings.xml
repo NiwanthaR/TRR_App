@@ -38,6 +38,9 @@
     <string name="data_not_filled">Data not full filled.</string>
     <string name="data_upload_failed">Data upload failed.</string>
 
+    <string name="quick_booking_start_date">QUICK_BOOK_START_DATE</string>
+    <string name="quick_booking_end_date">QUICK_BOOK_END_DATE</string>
+
     <!--addBookingActivity-->
     <string name="dateNotFixed">Date not select correctly.</string>
 </resources>

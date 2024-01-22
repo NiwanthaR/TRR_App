@@ -1,15 +1,17 @@
 package com.example.trr_app.model;
 
 public class QuickBooking {
-    public String customerName,bookingDateRange,customerContact,headCount,specialNote,bookingType;
+    public String customerName,bookingDateRange,startDate,endDate,customerContact,headCount,specialNote,bookingType;
     public RoomReserve roomReserve;
 
     public QuickBooking() {
     }
 
-    public QuickBooking(String customerName, String bookingDateRange, String customerContact, String headCount, String specialNote, String bookingType, RoomReserve roomReserve) {
+    public QuickBooking(String customerName, String bookingDateRange, String startDate, String endDate, String customerContact, String headCount, String specialNote, String bookingType, RoomReserve roomReserve) {
         this.customerName = customerName;
         this.bookingDateRange = bookingDateRange;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.customerContact = customerContact;
         this.headCount = headCount;
         this.specialNote = specialNote;
@@ -32,6 +34,23 @@ public class QuickBooking {
     public void setBookingDateRange(String bookingDateRange) {
         this.bookingDateRange = bookingDateRange;
     }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
 
     public String getCustomerContact() {
         return customerContact;
@@ -71,18 +90,5 @@ public class QuickBooking {
 
     public void setRoomReserve(RoomReserve roomReserve) {
         this.roomReserve = roomReserve;
-    }
-
-    @Override
-    public String toString() {
-        return "QuickBooking{" +
-                "customerName='" + customerName + '\'' +
-                ", bookingDateRange='" + bookingDateRange + '\'' +
-                ", customerContact='" + customerContact + '\'' +
-                ", headCount='" + headCount + '\'' +
-                ", specialNote='" + specialNote + '\'' +
-                ", bookingType='" + bookingType + '\'' +
-                ", roomReserve=" + roomReserve +
-                '}';
     }
 }

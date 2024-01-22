@@ -3,6 +3,7 @@ package com.example.trr_app.common
 import android.app.AlertDialog
 import android.content.ClipDescription
 import android.content.Context
+import android.content.SharedPreferences
 import android.media.MediaPlayer.OnCompletionListener
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -12,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trr_app.R
+import com.example.trr_app.SharedPreference.SharedPreference
 import com.example.trr_app.model.Room
 import com.example.trr_app.support.LoadingDialog
 import com.example.trr_app.view.ManageUI.ManageActivity
@@ -54,6 +56,8 @@ open class BaseActivity : AppCompatActivity() {
     var userDatabaseReference : DatabaseReference? = null
     //loading progressBar Dialog
     private lateinit var loadingDialog : LoadingDialog
+    //Sharedpereferance
+    val sharedPreferences : SharedPreference = SharedPreference.getInstance()
     //order id
     var customerOrderID: Int = 0
     //TAG Name
