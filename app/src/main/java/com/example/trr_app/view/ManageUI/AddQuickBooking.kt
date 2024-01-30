@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.util.Pair
 import androidx.core.view.isVisible
@@ -104,6 +105,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         setContentView(R.layout.activity_add_quick_booking)
 
        //load
+
         loadEssentialData()
         //set Onclick
         dateRangeInput.setOnClickListener(this)
@@ -112,12 +114,12 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     private fun loadEssentialData(){
         //load room
-        //loadDataRoom()
+        loadDataRoom()
         //hide floating
-        //addNewQuickBook.isVisible = false
+        addNewQuickBook.isVisible = false
 
-        Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT).show()
-        startActivity(Intent(this,Dashboard::class.java))
+//        Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT).show()
+//        startActivity(Intent(this,Dashboard::class.java))
     }
 
     fun showBookingBtn(show:Boolean){
@@ -242,7 +244,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
         bookingDatabaseReference = firebaseDatabaseReference.child("Booking Details").child("Appointment Reservation")
 
-        val query:Query = bookingDatabaseReference.ref.orderByChild("checkIn").startAt(toDay)
+        val query:Query = bookingDatabaseReference.ref.orderByChild("checkIn").startAt(startDate)
 
         query.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -399,14 +401,14 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
         if (room!=null){
             //saveData
-            databaseReference.setValue(QuickBooking(name,dateRange,startDate,endDate,contact,headCount,specialNote,"Temporary",room))
+            databaseReference.setValue(QuickBooking(name,dateRange,startDate,endDate,contact,headCount,specialNote,"Temporary",postUniqueKey,room))
                 .addOnCompleteListener {task ->
                     if (task.isSuccessful){
-                        //Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT)
-                           // .show()
 
                         //reset page
-                        loadEssentialData()
+                        //loadEssentialData()
+                        Toast.makeText(baseContext,R.string.booking_successfully,Toast.LENGTH_SHORT).show()
+                        startActivity(Intent(baseContext,Dashboard::class.java))
 
                     }else{
                         Log.e(TAG, "Data upload not success.")

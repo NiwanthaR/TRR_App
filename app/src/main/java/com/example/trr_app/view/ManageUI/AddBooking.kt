@@ -561,8 +561,27 @@ class AddBooking : BaseActivity(), OnClickListener {
         }
     }
     private fun uploadData(roomReserve: RoomReserve): SubmitBooking {
-       val submitBooking = SubmitBooking(dateRangeTxt,checkInDate,checkOutDate,headCountTxt,roomCountTxt,bookingTypeTxt,firstName,secondName,address,area,city,contact,NIC,specialNote,mealOrderedGSON,featureReservationGSON,roomReservationGSON,roomReserve)
-        return submitBooking
+        return SubmitBooking(
+            dateRangeTxt,
+            checkInDate,
+            checkOutDate,
+            headCountTxt,
+            roomCountTxt,
+            bookingTypeTxt,
+            firstName,
+            secondName,
+            address,
+            area,
+            city,
+            contact,
+            NIC,
+            specialNote,
+            mealOrderedGSON,
+            featureReservationGSON,
+            roomReservationGSON,
+            postUniqueKey,
+            roomReserve
+        )
     }
 
     //Dataloading

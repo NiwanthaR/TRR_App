@@ -124,7 +124,6 @@ class Dashboard : BaseActivity(),OnClickListener {
                 //userName.text = data.userName
                 Log.e(TAG, "User not detect : data null")
             }
-
             override fun onCancelled(error: DatabaseError) {
                 Log.e(TAG, "User loading failed")
             }

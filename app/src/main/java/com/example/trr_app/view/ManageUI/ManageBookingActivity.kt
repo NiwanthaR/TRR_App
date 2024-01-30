@@ -40,7 +40,7 @@ class ManageBookingActivity : BaseActivity(),OnClickListener {
         startActivity(Intent(this@ManageBookingActivity,ManageActivity::class.java))
     }
     private fun moveToCompleteBooking(){
-        startActivity(Intent(this@ManageBookingActivity,CompleteQuickBooking::class.java))
+        startActivity(Intent(this@ManageBookingActivity,QuickBookingActivity::class.java))
     }
     private fun moveToAddBooking(){
         startActivity(Intent(this@ManageBookingActivity,AddBooking::class.java))
