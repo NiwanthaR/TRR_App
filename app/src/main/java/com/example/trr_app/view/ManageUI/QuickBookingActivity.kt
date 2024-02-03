@@ -41,6 +41,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -67,55 +68,56 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
         loadInCompleteBooking()
 
     }
-
-    private fun loadQuickBookingData() {
-
-        loadingProgressDialog(this)
-
-        databaseReference = firebaseDatabaseReference.child("Booking Details")
-            .child("Appointment Reservation")
-        val quary = databaseReference.ref
-
-        options = FirebaseRecyclerOptions.Builder<QuickBooking>().setQuery(quary,QuickBooking::class.java).build()
-
-        adapter = object : FirebaseRecyclerAdapter<QuickBooking,QuickBookViewHolder>(options!!){
-
-            override fun onBindViewHolder(
-                holder: QuickBookViewHolder,
-                position: Int,
-                model: QuickBooking
-            ) {
-                holder.dateRange.setText(model.booking_dateRange)
-                holder.customerName.setText(model.customerName)
-                holder.customerContact.setText(model.customerContact)
-
-                holder.view.setOnClickListener(OnClickListener {
-                    val intent = Intent(this@QuickBookingActivity,CompleteQuickBooking::class.java)
-                    //intent.putExtra("BookingNumber",)
-                })
-            }
-
-            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuickBookViewHolder {
-                val v: View = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.single_quick_booking, parent, false)
-                return QuickBookViewHolder(v)
-            }
-
-        }
-
-        (adapter as FirebaseRecyclerAdapter<QuickBooking, QuickBookViewHolder>).startListening()
-        recyclerView.adapter = adapter
-
-        loadingDialogClose()
-    }
+//    -------  Not working ------------------------------------------------------------------------------------------------------
+//    private fun loadQuickBookingData() {
+//
+//        loadingProgressDialog(this)
+//
+//        databaseReference = firebaseDatabaseReference.child("Booking Details")
+//            .child("Appointment Reservation")
+//        val quary = databaseReference.ref
+//
+//        options = FirebaseRecyclerOptions.Builder<QuickBooking>().setQuery(quary,QuickBooking::class.java).build()
+//
+//        adapter = object : FirebaseRecyclerAdapter<QuickBooking,QuickBookViewHolder>(options!!){
+//
+//            override fun onBindViewHolder(
+//                holder: QuickBookViewHolder,
+//                position: Int,
+//                model: QuickBooking
+//            ) {
+//                holder.dateRange.setText(model.booking_dateRange)
+//                holder.customerName.setText(model.customerName)
+//                holder.customerContact.setText(model.customerContact)
+//
+//                holder.view.setOnClickListener(OnClickListener {
+//                    val intent = Intent(this@QuickBookingActivity,CompleteQuickBooking::class.java)
+//                    //intent.putExtra("BookingNumber",)
+//                })
+//            }
+//
+//            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuickBookViewHolder {
+//                val v: View = LayoutInflater.from(parent.context)
+//                    .inflate(R.layout.single_quick_booking, parent, false)
+//                return QuickBookViewHolder(v)
+//            }
+//
+//        }
+//
+//        (adapter as FirebaseRecyclerAdapter<QuickBooking, QuickBookViewHolder>).startListening()
+//        recyclerView.adapter = adapter
+//
+//        loadingDialogClose()
+//    }
 
     private fun loadInCompleteBooking() {
 
+        val date = getCurrentDate()
         loadingProgressDialog(this@QuickBookingActivity)
 
         val mChatDatabaseReference = firebaseDatabaseReference.child("Booking Details")
             .child("Appointment Reservation")
-        val query = mChatDatabaseReference.ref
+        val query = mChatDatabaseReference.ref.orderByChild("checkIn").startAfter(date)
         query.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 recyclerView.layoutManager = LinearLayoutManager(this@QuickBookingActivity)
@@ -147,5 +149,8 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
         }
     }
 
-
+    fun getCurrentDate():String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(Date())
+    }
 }

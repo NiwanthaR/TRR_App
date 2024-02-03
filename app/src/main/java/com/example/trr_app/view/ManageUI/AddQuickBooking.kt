@@ -32,6 +32,7 @@ import com.example.trr_app.view.Dashboard
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -60,7 +61,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     //TAG Name
     private val TAG: String = BaseActivity::class.java.name
 
-    private val contentView : RelativeLayout
+    private val contentViewRelative : RelativeLayout
         get() = findViewById(R.id.addQuickBookingLayoutContent)
 
     //database Reference
@@ -91,6 +92,8 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     var selectedRoomList : ArrayList<Room> = ArrayList()
 
+    //bottom sheet
+    private var bottomSheet : QuickBookingDialog? = null
 
     //room flag
     private var R001 : Boolean = false
@@ -258,7 +261,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                     }else{
                         Log.e(TAG, "Data loading failed. booking is empty")
-                        Snackbar.make(contentView,R.string.booking_data_null, Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(contentViewRelative,R.string.booking_data_null, Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
@@ -377,7 +380,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 loadDataBooking(startDate!!, endDate!!, today!!)
             }else{
                 Log.e(TAG, "Date details not correctly full fill")
-                Snackbar.make(contentView,R.string.dateNotFixed, Snackbar.LENGTH_SHORT)
+                Snackbar.make(contentViewRelative,R.string.dateNotFixed, Snackbar.LENGTH_SHORT)
                     .show()
             }
         }
@@ -407,36 +410,38 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                         //reset page
                         //loadEssentialData()
-                        Toast.makeText(baseContext,R.string.booking_successfully,Toast.LENGTH_SHORT).show()
-                        startActivity(Intent(baseContext,Dashboard::class.java))
+                        //Toast.makeText(applicationContext,R.string.booking_successfully,Toast.LENGTH_SHORT).show()
+                        bottomSheet?.dismiss()
+                        addNewQuickBook.isVisible = false
+                        //startActivity(Intent(applicationContext,Dashboard::class.java))
 
                     }else{
                         Log.e(TAG, "Data upload not success.")
-                        Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+                        Toast.makeText(applicationContext,R.string.data_upload_failed, Toast.LENGTH_SHORT)
                             .show()
                     }
 
                 }.addOnFailureListener {OnFailureListener{
                     Log.e(TAG, "Data upload not success.")
-                    Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+                    Toast.makeText(applicationContext,R.string.data_upload_failed, Toast.LENGTH_SHORT)
                         .show()
                 }
                 }
         }else{
             Log.e(TAG, "Selected room null")
-            Snackbar.make(contentView,R.string.data_upload_failed, Snackbar.LENGTH_SHORT)
+            Toast.makeText(applicationContext,R.string.data_upload_failed, Toast.LENGTH_SHORT)
                 .show()
         }
     }
 
     private fun showBottomDialog(){
 
-        sharedPreferences.saves(this,"QUICK_BOOK_START_DATE",startDate)
-        sharedPreferences.saves(this,"QUICK_BOOK_START_END",endDate)
+        //sharedPreferences.saves(this,"QUICK_BOOK_START_DATE",startDate)
+        //sharedPreferences.saves(this,"QUICK_BOOK_START_END",endDate)
         val dateRange = dateRangeInput.text.toString()
 
-        val bottomSheet = QuickBookingDialog(roomAdaptor,startDate,endDate,dateRange)
-        bottomSheet.show(supportFragmentManager, "ModalBottomSheet")
+        bottomSheet = QuickBookingDialog(roomAdaptor,startDate,endDate,dateRange)
+        bottomSheet!!.show(supportFragmentManager, "ModalBottomSheet")
 
     }
 }

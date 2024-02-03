@@ -61,9 +61,10 @@ class LoginScreen : BaseActivity(), OnClickListener {
 
     private fun checkUserAvailability(){
         if (firebaseUser != null) {
-            finish()
             startActivity(Intent(this@LoginScreen, Dashboard::class.java))
+            sharedPreferences.saves(this@LoginScreen,"UID", firebaseUser!!.uid)
             Log.d(TAG,"Existing User Available.")
+            finish()
         }
     }
 //
@@ -110,6 +111,7 @@ class LoginScreen : BaseActivity(), OnClickListener {
                             startActivity(Intent(this@LoginScreen, Dashboard::class.java))
                             Log.d(TAG,"Login Successfully.")
                             Snackbar.make(contentView,"Login Successfully.",Snackbar.LENGTH_SHORT).show()
+                            sharedPreferences.saves(this@LoginScreen,"UID",firebaseAuth.uid)
                         } else {
                             //progressDialog.dismiss()
                             //wrong_details.setText("Login Failed Check your Details")

@@ -19,11 +19,19 @@ class QuickBookingAdaptor(var context: Context,var items : ArrayList<QuickBookin
         var customerContact:TextView? = null
         var singleBookingUI:MaterialCardView? = null
 
+        //booking category
+        var bookingCategoryCard : MaterialCardView? = null
+        var bookingCategoryName : TextView? = null
+
         init {
             this.dateRange = row?.findViewById(R.id.dateRange_txt)
             this.customerName = row?.findViewById(R.id.customerName_txt)
             this.customerContact = row?.findViewById(R.id.customerContact_txt)
             this.singleBookingUI = row?.findViewById(R.id.quickBookingSingleUI)
+
+            //material
+            this.bookingCategoryCard = row?.findViewById(R.id.bookingCategoryCard)
+            this.bookingCategoryName = row?.findViewById(R.id.bookingCategoryText)
         }
     }
 
@@ -41,6 +49,15 @@ class QuickBookingAdaptor(var context: Context,var items : ArrayList<QuickBookin
         holder?.dateRange?.text = userDto.getBooking_dateRange()
         holder?.customerName?.text = userDto.getCustomerName()
         holder?.customerContact?.text = userDto.getCustomerContact()
+        holder?.bookingCategoryName?.text = userDto.getBookingType()
+
+        if (userDto.bookingType=="Permanent"){
+            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_green))
+            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_green)
+        }else{
+            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_red))
+            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_red)
+        }
 
         holder.singleBookingUI?.setOnClickListener {
             val intent = Intent(context, CompleteQuickBooking::class.java)

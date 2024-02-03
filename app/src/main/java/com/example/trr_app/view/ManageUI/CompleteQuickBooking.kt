@@ -1,9 +1,13 @@
 package com.example.trr_app.view.ManageUI
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
@@ -14,7 +18,9 @@ import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
 import com.example.trr_app.view.Dashboard
 import com.google.android.material.chip.Chip
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
@@ -22,14 +28,20 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
+import kotlin.math.log
 
-class CompleteQuickBooking : BaseActivity() {
+class CompleteQuickBooking : BaseActivity(),OnClickListener {
 
     private val TAG: String
             = CompleteQuickBooking::class.java.name
     //relativeUI
     private val contentView : RelativeLayout
         get() = findViewById(R.id.completeBookingView)
+    //Linear Layout
+    private val otherServiceLayout : LinearLayout
+        get() = findViewById(R.id.cqb_otherServiceLayout)
+    private val mealServiceLayout : LinearLayout
+        get() = findViewById(R.id.cqb_mealDetailsLayout)
     //text input edite texts
     private val customerFName : TextInputEditText
         get() = findViewById(R.id.cqb_fname)
@@ -67,9 +79,9 @@ class CompleteQuickBooking : BaseActivity() {
     private val mealChooser : MealChooser? = null
 
     //on off switches
-    private val mealService : Button
+    private val mealService : SwitchMaterial
         get() = findViewById(R.id.cqb_mealsDetailsSwitch)
-    private val otherService : Button
+    private val otherService : SwitchMaterial
         get() = findViewById(R.id.cqb_otherServiceSwitch)
 
     //db reference
@@ -77,6 +89,8 @@ class CompleteQuickBooking : BaseActivity() {
 
     //String
     private var bookingNo : String? = null
+    private var checkIn : String? = null
+    private var checkOut : String? = null
 
     //chip feature
     private var chipFeature1 : Boolean = false
@@ -131,13 +145,74 @@ class CompleteQuickBooking : BaseActivity() {
         //get booking number
         bookingNo = intent.getStringExtra("BookingNumber")
 
+        //click Listener
+        btnComplete.setOnClickListener(this)
+        btnGoBack.setOnClickListener(this)
+
         //load data
         if (bookingNo!=null){
             loadData(bookingNo)
         }else{
             Snackbar.make(contentView,"Please try again...!!",Snackbar.LENGTH_SHORT).show()
         }
+
+        mealService.setOnCheckedChangeListener{ _, isChecked ->
+            Log.d(TAG,"Meal service TAB load")
+            if (isChecked) {
+                mealServiceLayout.visibility = View.VISIBLE
+            } else {
+                mealServiceLayout.visibility = View.GONE
+            }
+        }
+
+        otherService.setOnCheckedChangeListener{ _, isChecked ->
+            Log.d(TAG,"Other service TAB load")
+            if (isChecked) {
+                otherServiceLayout.visibility = View.VISIBLE
+            } else {
+                otherServiceLayout.visibility = View.GONE
+            }
+        }
+
+        //chip meals feedback
+        chip01.setOnCheckedChangeListener { chip, ischecked ->
+            Cp1Status = ischecked
+        }
+        chip02.setOnCheckedChangeListener { chip, ischecked ->
+            Cp2Status = ischecked
+        }
+        chip03.setOnCheckedChangeListener { chip, ischecked ->
+            Cp3Status = ischecked
+        }
+        chip04.setOnCheckedChangeListener { chip, ischecked ->
+            Cp4Status = ischecked
+        }
+        chip05.setOnCheckedChangeListener { chip, ischecked ->
+            Cp5Status = ischecked
+        }
+        chip06.setOnCheckedChangeListener { chip, ischecked ->
+            Cp6Status = ischecked
+        }
+
+        //chip features
+        chipFeature01.setOnCheckedChangeListener { chip, ischecked ->
+            chipFeature1 = ischecked
+        }
+        chipFeature02.setOnCheckedChangeListener { chip, ischecked ->
+            chipFeature2 = ischecked
+        }
+        chipFeature03.setOnCheckedChangeListener { chip, ischecked ->
+            chipFeature3 = ischecked
+        }
+        chipFeature04.setOnCheckedChangeListener { chip, ischecked ->
+            chipFeature4 = ischecked
+        }
+        chipFeature05.setOnCheckedChangeListener { chip, ischecked ->
+            chipFeature5 = ischecked
+        }
     }
+
+
 
     private fun loadData(bookingNo:String?){
         //load dialog
@@ -177,20 +252,24 @@ class CompleteQuickBooking : BaseActivity() {
         headCount.setText(data.headCount)
         contact.setText(data.customerContact)
         specialNote.setText(data.specialNote)
-        //roomCount.setText()
+        //roomCount.setText(data.r)
         bookingType.setText(data.bookingType)
         roomList = data.roomReserve
+        checkIn = data.checkIn
+        checkOut = data.checkOut
     }
 
-    private fun captureData(){
+    private fun captureData():SubmitBooking{
         val updateBooking = SubmitBooking()
 
-        updateBooking.setFirstName(customerFName.text.toString())
-        updateBooking.setSecondName(customerSName.text.toString())
-        updateBooking.setBookingType(bookingType.text.toString())
         updateBooking.setBooking_dateRange(bookingDateRange.text.toString())
+        updateBooking.setCheckIn(checkIn)
+        updateBooking.setCheckOut(checkOut)
         updateBooking.setHeadCount(headCount.text.toString())
         updateBooking.setRoomsCount(roomCount.text.toString())
+        updateBooking.setBookingType(bookingType.text.toString())
+        updateBooking.setFirstName(customerFName.text.toString())
+        updateBooking.setSecondName(customerSName.text.toString())
         updateBooking.setAddress(address.text.toString())
         updateBooking.setArea(area.text.toString())
         updateBooking.setCity(city.text.toString())
@@ -198,39 +277,71 @@ class CompleteQuickBooking : BaseActivity() {
         updateBooking.setIdentity(nic.text.toString())
         updateBooking.setSpecialNote(specialNote.text.toString())
 
+        //get room list
+        if (roomList!=null){
+            updateBooking.setRoomList(roomList.toString())
+        }else{
+            Snackbar.make(contentView,"Room list has been empty..!",Snackbar.LENGTH_SHORT).show()
+            Log.e(TAG,"Room list is empty check it..!")
+        }
+        //meal
+        val meal = countMeal()
+        updateBooking.setMealList(meal.toString())
+        //features
+        val features = countFeatures()
+        updateBooking.setFeatureList(features.toString())
 
-        //chip meals feedback
-        chip01.setOnCheckedChangeListener { chip, ischecked ->
-            Cp1Status = ischecked
-        }
-        chip02.setOnCheckedChangeListener { chip, ischecked ->
-            Cp2Status = ischecked
-        }
-        chip03.setOnCheckedChangeListener { chip, ischecked ->
-            Cp3Status = ischecked
-        }
-        chip04.setOnCheckedChangeListener { chip, ischecked ->
-            Cp4Status = ischecked
-        }
-        chip05.setOnCheckedChangeListener { chip, ischecked ->
-            Cp5Status = ischecked
-        }
-        chip06.setOnCheckedChangeListener { chip, ischecked ->
-            Cp6Status = ischecked
-        }
+        Log.e(TAG,updateBooking.toString())
 
-
+        //return data
+        return updateBooking
     }
 
-    private fun countMeal(){
+    private fun countMeal():MealChooser{
         val mealChooser = MealChooser(Cp1Status,Cp2Status,Cp3Status,Cp4Status,Cp5Status,Cp6Status)
         val gson = Gson()
         mealOrderedGSON = gson.toJson(mealChooser)
+
+        //select meal
+        return mealChooser
     }
 
-    private fun countFeatures(){
+    private fun countFeatures():FeatureReservation{
         val featureReservation = FeatureReservation(chipFeature1,chipFeature2,chipFeature3,chipFeature4,chipFeature5,chipFeature6)
         val gson = Gson()
         featureReservationGSON = gson.toJson(featureReservation)
+
+        //select features
+        return featureReservation
+    }
+
+    private fun submitData(){
+        //collect data
+        val submitData = captureData()
+
+        if (submitData.uniqueKey!=null){
+            //upload data
+            databaseReference.setValue(submitData).addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    Snackbar.make(contentView,"Your details update successfully..!",Snackbar.LENGTH_SHORT).show()
+                    //back to menu
+                    goBack()
+                }
+            }.addOnFailureListener {
+                Snackbar.make(contentView,"Update Failed.",Snackbar.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun goBack(){
+        startActivity(Intent(this@CompleteQuickBooking,QuickBookingActivity::class.java))
+        this.finish()
+    }
+
+    override fun onClick(view: View?) {
+        when(view?.id){
+            R.id.cqb_btn_complete -> submitData()
+            R.id.cqb_btn_goBack -> onBackPressed()
+        }
     }
 }

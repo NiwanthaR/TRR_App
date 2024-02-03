@@ -12,6 +12,7 @@
     <color name="light_dark_blue">#C5DFF8</color>
     <color name="semiTransparentColor">#80FFFFFF</color>
     <color name="light_yellow">#FFF9DE</color>
+    <color name="light_red">#fa9da4</color>
 
     <color name="app_yellow_dark">#ffc40c </color>
     <color name="app_yellow_light">#FCE205</color>

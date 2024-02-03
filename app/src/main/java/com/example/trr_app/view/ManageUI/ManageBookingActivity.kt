@@ -32,7 +32,7 @@ class ManageBookingActivity : BaseActivity(),OnClickListener {
         when (view?.id){
             R.id.layoutAddBooking -> moveToAddBooking()
             R.id.layoutCompleteQuickBooking -> moveToCompleteBooking()
-            R.id.layoutUpCommingBooking -> moveToAddBooking()
+            R.id.layoutUpCommingBooking -> moveToUpComingBooking()
         }
     }
 
@@ -44,5 +44,8 @@ class ManageBookingActivity : BaseActivity(),OnClickListener {
     }
     private fun moveToAddBooking(){
         startActivity(Intent(this@ManageBookingActivity,AddBooking::class.java))
+    }
+    private fun moveToUpComingBooking(){
+        startActivity(Intent(this@ManageBookingActivity,UpComingBookingActivity::class.java))
     }
 }

@@ -31,6 +31,23 @@
                android:fontFamily="@font/merriweather_regular"
                android:text="Date Range "/>
 
+           <com.google.android.material.card.MaterialCardView
+               android:id="@+id/bookingCategoryCard"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_alignParentEnd="true"
+               android:layout_alignParentTop="true"
+               android:layout_marginTop="15dp"
+               android:layout_marginEnd="10dp">
+
+               <TextView
+                   android:id="@+id/bookingCategoryText"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_margin="10dp"
+                   android:text="Permanent Booking"/>
+           </com.google.android.material.card.MaterialCardView>
+
            <TextView
                android:layout_below="@id/dateRange_title"
                android:layout_marginStart="10dp"

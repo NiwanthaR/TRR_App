@@ -348,7 +348,6 @@
                     android:id="@+id/etNIC"
                     android:layout_width="0dp"
                     android:layout_weight="2"
-                    android:layout_marginEnd="5dp"
                     android:layout_height="wrap_content"
                     app:startIconDrawable="@drawable/contact_emergency_24"
                     android:hint="NIC">
@@ -378,7 +377,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:id="@+id/otherServiceLayout">
+                android:id="@+id/cqb_otherServiceLayout">
 
                 <LinearLayout
                     android:id="@+id/titleBar4"
@@ -466,7 +465,7 @@
                 android:text="Meals and Foods"/>
 
             <LinearLayout
-                android:id="@+id/mealDetailsLayout"
+                android:id="@+id/cqb_mealDetailsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
