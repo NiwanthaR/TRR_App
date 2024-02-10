@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
+import com.example.trr_app.adaptor.AllBookingEditeAdaptor
 import com.example.trr_app.adaptor.QuickBookingAdaptor
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.QuickBooking
@@ -59,7 +60,8 @@ class AllBookingFragment : Fragment() {
                         val booking = snapshot.getValue(QuickBooking::class.java)
                         quickBooking.add(booking!!)
                     }
-                    val adapter = QuickBookingAdaptor(context!!,quickBooking)
+                    //val adapter = QuickBookingAdaptor(context!!,quickBooking)
+                    val adapter = AllBookingEditeAdaptor(context!!,quickBooking)
                     allRecyclerView!!.adapter = adapter
                 }
             }

@@ -1,20 +1,30 @@
 package com.example.trr_app.support
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.core.view.isVisible
 import com.example.trr_app.R
 import com.example.trr_app.adaptor.RoomAdaptor
+import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.RoomReserve
+import com.example.trr_app.view.Dashboard
 import com.example.trr_app.view.ManageUI.AddQuickBooking
+import com.example.trr_app.view.ManageUI.QuickBookingActivity
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 
 class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:String?,dateRange:String?): BottomSheetDialogFragment() {
@@ -30,6 +40,18 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
     private var count: String? = null
     private var contact : String?  = null
     private var note: String? = null
+
+    //Firebase
+    val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
+    val firebaseDatabaseReference : DatabaseReference = firebaseDatabase.reference.child("TRRApp")
+    //database reference
+    private var databaseReference : DatabaseReference = firebaseDatabaseReference
+
+    //TAG Name
+    private val TAG: String = QuickBookingDialog::class.java.name
+
+    //alert dialog
+    private var successAlertDialog = BookingSuccessDialog()
 
     //Date
     private var startDate: String? = startDate
@@ -100,11 +122,13 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
 
         if (contact!=null){
             val room = getSelectRooms()
-            addQuickBooking = AddQuickBooking().captureQuickBookData(name,contact,count,note,room,startDate,endtDate,dateRange)
-            dialog.dismiss()
+            //addQuickBooking = AddQuickBooking().captureQuickBookData(name,contact,count,note,room,startDate,endtDate,dateRange)
+            //dialog.dismiss()
+
+            submitQuickBooking(name,contact,count,note,room,startDate,endtDate,dateRange)
+
         }
     }
-
     private fun getSelectRooms(): RoomReserve {
 
         clearRM()
@@ -218,5 +242,43 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
 //        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
 
 
+    }
+
+    private fun submitQuickBooking(name:String?,contact:String?,headCount:String?,specialNote:String?,room:RoomReserve?,startDate: String?,endDate:String?,dateRange:String?){
+        //get unique que
+        val postUniqueKey = firebaseDatabaseReference.push().key.toString()
+        Log.d(TAG, "Post Key : $postUniqueKey")
+
+        //set path
+        databaseReference = firebaseDatabaseReference.child("Booking Details").child("Appointment Reservation")
+            .child(postUniqueKey)
+
+        if (room!=null){
+            //saveData
+            databaseReference.setValue(QuickBooking(name,dateRange,startDate,endDate,contact,headCount,specialNote,"Temporary",postUniqueKey,room))
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful){
+
+                        //Toast.makeText(this@QuickBookingDialog.context,R.string.booking_successfully, Toast.LENGTH_SHORT).show()
+                        successAlertDialog.showDialog(this@QuickBookingDialog.activity,"")
+                        dialog.dismiss()
+
+                    }else{
+                        Log.e(TAG, "Data upload not success.")
+                        Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+
+                }.addOnFailureListener { OnFailureListener{
+                    Log.e(TAG, "Data upload not success.")
+                    Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+                        .show()
+                }
+                }
+        }else{
+            Log.e(TAG, "Selected room null")
+            Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }

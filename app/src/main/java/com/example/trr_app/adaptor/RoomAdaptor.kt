@@ -35,6 +35,10 @@ class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBoo
         holder.navigateArrow.visibility = View.VISIBLE
         holder.doneIcon.visibility = View.GONE
 
+        if (alreadyBookedList.size!=1 && item.room_unic_code=="R007"){
+            holder.itemView.visibility = View.GONE
+        }
+
         if (alreadyBookedList.contains(item.room_unic_code)){
             holder.alreadyLayout.visibility = View.VISIBLE
             holder.roomLayout.isActivated = false

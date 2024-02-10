@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.User
+import com.example.trr_app.support.BookingSuccessDialog
 import com.example.trr_app.view.ManageUI.AddQuickBooking
 import com.example.trr_app.view.ManageUI.ManageActivity
 import com.example.trr_app.view.ManageUI.ManageBookingActivity
@@ -55,6 +56,8 @@ class Dashboard : BaseActivity(),OnClickListener {
 
     //database reference
     private var databasereference = firebaseDatabaseReference
+    //dialog
+    private val alertDialog = BookingSuccessDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +88,7 @@ class Dashboard : BaseActivity(),OnClickListener {
         when(view?.id){
             R.id.manageUILayout -> startActivity(Intent(this,ManageBookingActivity::class.java))
             R.id.layoutQuickBooking ->moveToQuickBooking()
-            R.id.historyCardView -> loadingProgressDialog(this)
+            R.id.historyCardView -> alertDialog.showDialog(this@Dashboard,"SS")
             R.id.userLogoutLayout -> userSignOut()
             R.id.settings_card -> loadSettingsCard()
         }

@@ -55,6 +55,7 @@
         android:layout_below="@id/topToolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -91,11 +92,15 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/dataLoadedLayout"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/searchDateArea"
         android:layout_marginTop="10dp"
+        android:scrollbars="none"
         android:layout_marginStart="10dp"
+        android:background="@color/white"
         android:layout_marginEnd="10dp">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -104,6 +109,85 @@
             android:layout_height="match_parent"
             android:scrollbars="none"/>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/houseFullLayout"
+        android:layout_below="@id/searchDateArea"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/reserved_logo"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_above="@id/reservation_sorry"
+            android:layout_marginBottom="-40dp"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/reservation_sorry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/sorry_reception"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_below="@id/reservation_sorry"
+            android:textAlignment="center"
+            android:fontFamily="@font/merriweather_regular"
+            android:text="We're sorry to inform you that all our rooms are currently booked. Please consider checking alternative dates...!"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/selectDateFirstLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_below="@id/searchDateArea">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please select date first."
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/select_date_anime"
+            android:fontFamily="@font/merriweather_regular"
+            android:textSize="25sp"/>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/select_date_anime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:lottie_rawRes="@raw/select_date_anime"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:text="Kindly select your preferred date range to check room availability using datepicker. Thank you!"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/select_date_anime"
+            android:fontFamily="@font/merriweather_light"
+            android:textAlignment="center"/>
+
+    </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addNewQuickBooking"

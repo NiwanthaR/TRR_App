@@ -6,9 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.ScrollView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.core.util.Pair
@@ -55,11 +58,20 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private val roomRecyclerView : RecyclerView
         get() = findViewById(R.id.quickRoomList)
 
+    private val selectDateLayout : RelativeLayout
+        get() = findViewById(R.id.selectDateFirstLayout)
+
+    private val houseFullLayout : RelativeLayout
+        get() = findViewById(R.id.houseFullLayout)
+
+    private val roomDataListLayout : ScrollView
+        get() = findViewById(R.id.dataLoadedLayout)
+
     private val addNewQuickBook : ExtendedFloatingActionButton
         get() = findViewById(R.id.addNewQuickBooking)
 
     //TAG Name
-    private val TAG: String = BaseActivity::class.java.name
+    private val TAG: String = AddQuickBooking::class.java.name
 
     private val contentViewRelative : RelativeLayout
         get() = findViewById(R.id.addQuickBookingLayoutContent)
@@ -107,8 +119,11 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_quick_booking)
 
-       //load
+        //hide Ui
+        roomDataListLayout.visibility = View.GONE
+        houseFullLayout.visibility = View.GONE
 
+       //load
         loadEssentialData()
         //set Onclick
         dateRangeInput.setOnClickListener(this)
@@ -131,7 +146,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     private fun loadDataRoom(){
         //start loading
-        loadingProgressDialog(this)
+        //loadingProgressDialog(this)
 
         roomDatabaseReference = firebaseDatabaseReference.child("Room Details")
             .child("Room Profile")
@@ -152,6 +167,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 }
 
                 val roomListSize = roomList.size
+                sharedPreferences.saves(this@AddQuickBooking,"RoomCount",roomListSize.toString())
 
                 if (roomListSize!=0){
                     roomRecyclerView.layoutManager = LinearLayoutManager(this@AddQuickBooking)
@@ -163,7 +179,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 }
 
                 //dismiss
-                loadingDialogClose()
+                //loadingDialogClose()
 
             }
 
@@ -175,61 +191,6 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     }
 
-    private fun getSelectRooms():RoomReserve?{
-
-        //roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList){ show->showBookingBtn(show)}
-        //clear
-        clearRM()
-        if (roomAdaptor!=null){
-
-            val selectItem = roomAdaptor!!.getSelectedList()
-            println(selectItem)
-
-            //navigate to Quick Booking
-            val count = selectItem.size
-            val roomList = ArrayList<String>()
-
-            for (i in 0..<count) {
-                roomList.add(selectItem[i].room_unic_code)
-            }
-
-            for (i in 0..<count) {
-                if ( roomList[i]=="R001"){
-                    R001 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R002"){
-                    R002 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R003"){
-                    R003 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R004"){
-                    R004 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R005"){
-                    R005 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R006"){
-                    R006 = true
-                    roomList.removeAt(i)
-                }
-                if ( roomList[i]=="R007"){
-                    R007 = true
-                    roomList.removeAt(i)
-                }
-            }
-            return RoomReserve(R001,R002,R003,R004,R005,R006,R007)
-            println("X")
-        }else{
-            return RoomReserve(false,false,false,false,false,false,false)
-            println("y")
-        }
-    }
 
     private fun clearRM(){
         R001=false
@@ -267,20 +228,26 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                 val listSize = bookingList.size
 
-                for (i in 0..< listSize){
-                    if (checkOverLeapOrNot(startDate,endDate,bookingList[i].checkIn,bookingList[i].checkOut)){
-                        Log.d(TAG, "Date Overlapped add to array")
-                        overLeapList.add(bookingList[i])
-                    }else{
-                        Log.e(TAG, "Date Overlapped isnt add array")
+                if (listSize!=0){
+                    for (i in 0..< listSize){
+                        if (checkOverLeapOrNot(startDate,endDate,bookingList[i].checkIn,bookingList[i].checkOut)){
+                            Log.d(TAG, "Date Overlapped add to array")
+                            overLeapList.add(bookingList[i])
+                        }else{
+                            Log.e(TAG, "Date not Overlapped add array")
+                        }
                     }
-                }
 
-                setAvailability(overLeapList)
+                    setAvailability(overLeapList)
+                }else{
+                    roomDataListLayout.visibility = VISIBLE
+                    selectDateLayout.visibility = GONE
+                    houseFullLayout.visibility = GONE
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                Log.e(TAG, "Data loading Failed")
             }
 
         })
@@ -294,7 +261,6 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     }
 
     private fun setAvailability(overLeapList : ArrayList<SubmitBooking>){
-        val s = overLeapList
 
         val roomBookingList : ArrayList<RoomReserve> = ArrayList()
         val listSize = overLeapList.size
@@ -338,8 +304,22 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 }
             }
 
+            if (bookedList.contains("R007")){
+                //change UI
+                selectDateLayout.visibility = GONE
+                houseFullLayout.visibility = VISIBLE
+            }
             //getDisplay Tabs
-            if (roomList.size!=0){
+            else if (roomList.size!=0){
+                //change UI
+                houseFullLayout.visibility = GONE
+                selectDateLayout.visibility = GONE
+                roomDataListLayout.visibility = VISIBLE
+
+                //close loading
+                loadingDialogClose()
+
+                //load Data
                 roomRecyclerView.layoutManager = LinearLayoutManager(this@AddQuickBooking)
                 roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList){ show->showBookingBtn(show)}
                 roomRecyclerView.adapter = roomAdaptor
@@ -410,7 +390,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                         //reset page
                         //loadEssentialData()
-                        //Toast.makeText(applicationContext,R.string.booking_successfully,Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,R.string.booking_successfully,Toast.LENGTH_SHORT).show()
                         bottomSheet?.dismiss()
                         addNewQuickBook.isVisible = false
                         //startActivity(Intent(applicationContext,Dashboard::class.java))
