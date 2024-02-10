@@ -58,8 +58,8 @@ class AddBooking : BaseActivity(), OnClickListener {
     private val roomCount : AutoCompleteTextView
         get() = findViewById(R.id.ac_roomCount)
 
-    private val bookingType : AutoCompleteTextView
-        get() = findViewById(R.id.ac_bookingType)
+    private val bookingBackground : AutoCompleteTextView
+        get() = findViewById(R.id.ac_bookingBackground)
 
     private val userFName : TextInputEditText
         get() = findViewById(R.id.eti_fname)
@@ -177,6 +177,9 @@ class AddBooking : BaseActivity(), OnClickListener {
     private var checkInDate : String? = null
     private var checkOutDate : String? = null
 
+    //Booking Type
+    //private var
+
     private var roomArray = ArrayList<String>()
 
     //user data
@@ -193,6 +196,7 @@ class AddBooking : BaseActivity(), OnClickListener {
     private var headCountTxt : String? = null
     private var roomCountTxt : String? = null
     private var bookingTypeTxt : String? = null
+    private var bookingBackgroundTxt : String? = null
 
     private var roomReservationGSON : String? = null
     private var mealOrderedGSON : String? = null
@@ -416,7 +420,7 @@ class AddBooking : BaseActivity(), OnClickListener {
             categoryList.add("Pilgrimage")
 
             val adapter = ArrayAdapter(this, R.layout.list_item,categoryList)
-            bookingType.setAdapter(adapter)
+            bookingBackground.setAdapter(adapter)
 
         }catch (e:Exception){
             Log.d(TAG, "Error" +e.message)
@@ -434,7 +438,8 @@ class AddBooking : BaseActivity(), OnClickListener {
         dateRangeTxt = bookingDate.text.toString()
         headCountTxt = headCount.text.toString()
         roomCountTxt = roomCount.text.toString()
-        bookingTypeTxt = bookingType.text.toString()
+        bookingTypeTxt = "Permanent"
+        bookingBackgroundTxt = bookingBackground.text.toString()
         firstName = userFName.text.toString()
         secondName = userSName.text.toString()
         address = userAddress.text.toString()
@@ -568,6 +573,7 @@ class AddBooking : BaseActivity(), OnClickListener {
             headCountTxt,
             roomCountTxt,
             bookingTypeTxt,
+            bookingBackgroundTxt,
             firstName,
             secondName,
             address,

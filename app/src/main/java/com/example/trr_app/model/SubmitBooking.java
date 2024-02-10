@@ -3,18 +3,19 @@ package com.example.trr_app.model;
 import java.util.ArrayList;
 
 public class SubmitBooking {
-    public String booking_dateRange,checkIn,checkOut,headCount,roomsCount,bookingType,firstName,secondName,address,area,city,contact,identity,specialNote,mealList,featureList,roomList,uniqueKey;
+    public String booking_dateRange,checkIn,checkOut,headCount,roomsCount,bookingType,bookingBackground,firstName,secondName,address,area,city,contact,identity,specialNote,mealList,featureList,roomList,uniqueKey;
     public RoomReserve roomReserve;
     public SubmitBooking() {
     }
 
-    public SubmitBooking(String booking_dateRange, String checkIn, String checkOut, String headCount, String roomsCount, String bookingType, String firstName, String secondName, String address, String area, String city, String contact, String identity, String specialNote, String mealList, String featureList, String roomList, String uniqueKey, RoomReserve roomReserve) {
+    public SubmitBooking(String booking_dateRange, String checkIn, String checkOut, String headCount, String roomsCount, String bookingType, String bookingBackground, String firstName, String secondName, String address, String area, String city, String contact, String identity, String specialNote, String mealList, String featureList, String roomList, String uniqueKey, RoomReserve roomReserve) {
         this.booking_dateRange = booking_dateRange;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.headCount = headCount;
         this.roomsCount = roomsCount;
         this.bookingType = bookingType;
+        this.bookingBackground = bookingBackground;
         this.firstName = firstName;
         this.secondName = secondName;
         this.address = address;
@@ -28,6 +29,14 @@ public class SubmitBooking {
         this.roomList = roomList;
         this.uniqueKey = uniqueKey;
         this.roomReserve = roomReserve;
+    }
+
+    public String getBookingBackground() {
+        return bookingBackground;
+    }
+
+    public void setBookingBackground(String bookingBackground) {
+        this.bookingBackground = bookingBackground;
     }
 
     public String getBooking_dateRange() {
