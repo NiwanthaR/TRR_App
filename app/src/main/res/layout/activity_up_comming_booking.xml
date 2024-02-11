@@ -53,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/topToolBar"
+        android:background="@color/white"
         app:tabMode="fixed">
 
         <com.google.android.material.tabs.TabItem
@@ -77,6 +78,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
+        android:background="@color/white"
         android:layout_below="@+id/selectingTabBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
-import com.example.trr_app.adaptor.QuickBookingAdaptor
+import com.example.trr_app.adaptor.AllBookingEditeAdaptor
 import com.example.trr_app.model.QuickBooking
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -17,6 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 
 class AllPermanentBookingFragment: Fragment() {
@@ -45,7 +46,7 @@ class AllPermanentBookingFragment: Fragment() {
 
         val mChatDatabaseReference = firebaseDatabase.reference.child("TRRApp").child("Booking Details")
             .child("Appointment Reservation")
-        val query = mChatDatabaseReference.ref.orderByChild("checkIn").startAfter(date).equalTo("bookingType","Permanent")
+        val query = mChatDatabaseReference.ref.orderByChild("bookingType").startAfter(date)
         query.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 allRecyclerView!!.layoutManager = LinearLayoutManager(context)
@@ -56,8 +57,21 @@ class AllPermanentBookingFragment: Fragment() {
                         val booking = snapshot.getValue(QuickBooking::class.java)
                         quickBooking.add(booking!!)
                     }
-                    val adapter = QuickBookingAdaptor(context!!,quickBooking)
+
+                    val upComingBookingList = ArrayList<QuickBooking>()
+
+                    for (booking in quickBooking) {
+                        if (booking.bookingType == "Permanent") {
+                            upComingBookingList.add(booking)
+                        }
+                    }
+
+                    println(quickBooking)
+
+                    //val adapter = QuickBookingAdaptor(context!!,quickBooking)
+                    val adapter = AllBookingEditeAdaptor(context!!,upComingBookingList)
                     allRecyclerView!!.adapter = adapter
+
                 }
             }
             override fun onCancelled(error: DatabaseError) {

@@ -19,9 +19,9 @@ class AllBookingAdaptor(
 
     override fun createFragment(position: Int): Fragment {
         return when(position){
-            1 -> AllBookingFragment()
-            2 -> AllQuickBookingFragment()
-            3 -> AllPermanentBookingFragment()
+            0 -> AllBookingFragment()
+            1 -> AllQuickBookingFragment()
+            2 -> AllPermanentBookingFragment()
             else -> {AllBookingFragment()}
         }
     }
