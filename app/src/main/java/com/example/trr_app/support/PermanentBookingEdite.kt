@@ -22,11 +22,11 @@ class PermanentBookingEdite(//Strings
         bottomSheetDialog.setOnShowListener { dialog ->
             this.dialog = dialog as BottomSheetDialog
             val bottomSheet =
-                dialog.findViewById<FrameLayout>(R.id.quickBookingFrameLayout)
+                dialog.findViewById<FrameLayout>(R.id.permanentBookingFrameLayout)
             BottomSheetBehavior.from(bottomSheet!!).state =
                 BottomSheetBehavior.STATE_EXPANDED
             BottomSheetBehavior.from(bottomSheet!!).skipCollapsed = true
-            BottomSheetBehavior.from(bottomSheet!!).isHideable = true
+            BottomSheetBehavior.from(bottomSheet!!).isHideable = false
         }
         return bottomSheetDialog
     }
