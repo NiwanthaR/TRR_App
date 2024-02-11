@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,7 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
         var customerName: TextView? = null
         var customerContact:TextView? = null
         var singleBookingUI:MaterialCardView? = null
+        var bookingTypeIcon:ImageView? = null
 
         var btnedit:MaterialButton? = null
         var btncontinue:MaterialButton? = null
@@ -35,11 +38,14 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
         var bottomSheet : QuickBookingEdite? = null
         var permanentBottomSheet : PermanentBookingEdite? = null
 
+        var submitBtnLayout : LinearLayout? = null
+
         init {
             this.dateRange = row?.findViewById(R.id.ab_dateRange_txt)
             this.customerName = row?.findViewById(R.id.ab_customerName_txt)
             this.customerContact = row?.findViewById(R.id.ab_customerContact_txt)
             this.singleBookingUI = row?.findViewById(R.id.ab_quickBookingSingleUI)
+            this.bookingTypeIcon = row.findViewById(R.id.img_bookingType_icon)
 
             //material
             this.bookingCategoryCard = row?.findViewById(R.id.ab_bookingCategoryCard)
@@ -48,6 +54,9 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
             //btn
             this.btnedit = row?.findViewById(R.id.ab_btn_edite)
             this.btncontinue = row?.findViewById(R.id.ab_btn_complete)
+
+            //layout
+            this.submitBtnLayout = row.findViewById(R.id.completeBtnLayout)
         }
     }
     override fun onCreateViewHolder(
@@ -66,12 +75,23 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
         holder?.customerContact?.text = userDto.getCustomerContact()
         holder?.bookingCategoryName?.text = userDto.getBookingType()
 
+        if (userDto.getCustomerContact().isNullOrEmpty()){
+            holder?.customerContact?.text = userDto.getContact()
+        }
+        if (userDto.getCustomerName().isNullOrEmpty()){
+            holder?.customerName?.text = userDto.getFirstName()+" "+userDto.getSecondName()
+        }
+
         if (userDto.bookingType=="Permanent"){
-            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_green))
-            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_green)
+//            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_green))
+//            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_green)
+            holder.bookingTypeIcon?.setImageDrawable(context.getDrawable(R.drawable.icon_booking_green))
+            holder.bookingCategoryName?.setTextColor(context.getColor(R.color.booking_category_permanent))
         }else{
-            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_red))
-            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_red)
+//            holder.bookingCategoryCard?.setCardBackgroundColor(context.getColor(R.color.light_red))
+//            holder.bookingCategoryCard?.strokeColor = context.getColor(R.color.light_red)
+            holder.bookingTypeIcon?.setImageDrawable(context.getDrawable(R.drawable.icon_booking_red))
+            holder.bookingCategoryName?.setTextColor(context.getColor(R.color.booking_category_temporary))
         }
 
         holder.btnedit?.setOnClickListener {
@@ -87,7 +107,8 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
         }
 
         if (userDto.bookingType=="Permanent"){
-            holder.btncontinue?.visibility = View.GONE
+            //holder.btncontinue?.visibility = View.GONE
+            holder.submitBtnLayout?.visibility  = View.GONE
         }else{
             holder.btncontinue?.setOnClickListener {
                 val intent = Intent(context, CompleteQuickBooking::class.java)

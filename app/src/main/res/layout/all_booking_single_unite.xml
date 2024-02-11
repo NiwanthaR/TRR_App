@@ -13,8 +13,8 @@
         android:id="@+id/ab_quickBookingSingleUI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:strokeColor="@color/dark_dull_ash"
-        android:backgroundTint="@color/dark_dull_ash">
+        app:strokeColor="@color/booking_single_ui_background"
+        android:backgroundTint="@color/booking_single_ui_background">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,7 +33,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/ab_bookingCategoryCard"
-                app:strokeColor="@color/dark_dull_ash"
+                app:strokeColor="@color/booking_single_ui_background"
+                app:cardBackgroundColor="@color/booking_single_ui_background"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -41,12 +42,26 @@
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp">
 
-                <TextView
-                    android:id="@+id/ab_bookingCategoryText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Permanent Booking"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_bookingType_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/icon_booking_green"/>
+
+                    <TextView
+                        android:id="@+id/ab_bookingCategoryText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/merriweather_black"
+                        android:text="Permanent Booking"/>
+                </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
@@ -128,21 +143,34 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/ab_btn_edite"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        app:cornerRadius="20dp"
                         android:text="Edite"
+                        android:backgroundTint="@color/app_edite_btn_background"
+                        app:icon="@drawable/edit_booking_icon"
+                        app:iconGravity="textEnd"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="match_parent"/>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/completeBtnLayout"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/ab_btn_complete"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        app:cornerRadius="20dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="5dp"
                         android:text="Complete"
+                        android:backgroundTint="@color/app_accept_btn_background"
+                        app:icon="@drawable/navigate_right_arrow"
+                        app:iconGravity="textEnd"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </LinearLayout>

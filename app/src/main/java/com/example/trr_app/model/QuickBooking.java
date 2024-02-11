@@ -4,6 +4,8 @@ public class QuickBooking {
     public String customerName,booking_dateRange,checkIn,checkOut,customerContact,headCount,specialNote,bookingType,uniqueKey;
     public RoomReserve roomReserve;
 
+    public String contact,firstName,secondName;
+
     public QuickBooking() {
     }
 
@@ -18,6 +20,46 @@ public class QuickBooking {
         this.bookingType = bookingType;
         this.uniqueKey = uniqueKey;
         this.roomReserve = roomReserve;
+    }
+
+    public QuickBooking(String customerName, String booking_dateRange, String checkIn, String checkOut, String customerContact, String headCount, String specialNote, String bookingType, String uniqueKey, RoomReserve roomReserve, String contact, String firstName, String secondName) {
+        this.customerName = customerName;
+        this.booking_dateRange = booking_dateRange;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.customerContact = customerContact;
+        this.headCount = headCount;
+        this.specialNote = specialNote;
+        this.bookingType = bookingType;
+        this.uniqueKey = uniqueKey;
+        this.roomReserve = roomReserve;
+        this.contact = contact;
+        this.firstName = firstName;
+        this.secondName = secondName;
+    }
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getCustomerName() {

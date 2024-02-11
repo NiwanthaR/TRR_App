@@ -19,6 +19,13 @@
 
     <color name="app_background_accept_btn">#00b33c</color>
     <color name="app_backgrounf_cancel_btn">#cc2900</color>
+    <color name="app_accept_btn_background">#9ADE7B</color>
+    <color name="app_edite_btn_background">#FFCD4B</color>
+
+    <color name="booking_category_permanent">#367E18</color>
+    <color name="booking_category_temporary">#D2001A</color>
+    <color name="booking_single_ui_background">#F7F5F2</color>
+    <color name="booking_single_ui_background2">#DDDDDD</color>
 
     <!--font colour splash -->
     <color name="app_splash_copyrights">#30424242</color>
