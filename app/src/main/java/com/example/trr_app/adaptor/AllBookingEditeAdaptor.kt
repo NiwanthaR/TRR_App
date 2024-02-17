@@ -100,7 +100,7 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
                 val fragmentManager = (context as FragmentActivity).supportFragmentManager
                 holder.bottomSheet!!.show(fragmentManager, "ModalBottomSheet")
             }else{
-                holder.permanentBottomSheet = PermanentBookingEdite(userDto.getUniqueKey())
+                holder.permanentBottomSheet = PermanentBookingEdite(context,userDto.getUniqueKey())
                 val fragmentManager = (context as FragmentActivity).supportFragmentManager
                 holder.permanentBottomSheet!!.show(fragmentManager, "ModalBottomSheet")
             }

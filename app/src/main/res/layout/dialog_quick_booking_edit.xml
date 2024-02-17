@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
-        android:id="@+id/quickBookingFrameLayout"
+        android:id="@+id/quickBookingFrameLayoutEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Animation.Design.BottomSheetDialog"
@@ -214,11 +214,11 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="10dp"
-                            android:textColor="@color/black"
                             app:icon="@drawable/trash_icon"
-                            app:iconTint="@color/black"
-                            android:background="@color/app_yellow_light"
-                            app:backgroundTint="@color/app_yellow_light"
+                            app:iconGravity="textEnd"
+                            app:iconTint="@color/white"
+                            android:textColor="@color/white"
+                            app:backgroundTint="@color/app_backgrounf_cancel_btn"
                             android:text="Delete"/>
                     </LinearLayout>
 
@@ -236,10 +236,10 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="5dp"
                             app:icon="@drawable/save_icon"
-                            app:iconTint="@color/black"
-                            android:textColor="@color/black"
-                            android:background="@color/app_yellow_light"
-                            app:backgroundTint="@color/app_yellow_light"
+                            android:textColor="@color/white"
+                            app:iconGravity="textEnd"
+                            app:iconTint="@color/white"
+                            app:backgroundTint="@color/app_background_accept_btn"
                             android:text="Save"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -247,19 +247,20 @@
 
         </RelativeLayout>
 
+        <!-- Success Layout-->
         <RelativeLayout
-            android:id="@+id/successfullyLayout"
+            android:id="@+id/successfullyLayoutQuick"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/success_title"
+                android:id="@+id/successQuick_title"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Successfully Booked"
+                android:text="Successfully Updated."
                 android:fontFamily="@font/rubik_medium"
                 android:textSize="20sp"
                 android:textAlignment="center"/>
@@ -283,7 +284,7 @@
                     android:layout_centerInParent="true"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGoQuick"
+                    android:id="@+id/qe_goBackBtn"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="10dp"
@@ -291,14 +292,12 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="60dp"
                     android:textColor="@color/black"
-                    android:background="@color/app_yellow_light"
                     app:backgroundTint="@color/app_yellow_light"
-                    android:text="Done"/>
+                    android:text="Go Back"/>
 
             </LinearLayout>
 
         </RelativeLayout>
-
 
     </FrameLayout>
 

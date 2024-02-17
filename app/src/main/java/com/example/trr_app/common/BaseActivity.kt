@@ -9,6 +9,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -174,6 +175,34 @@ open class BaseActivity : AppCompatActivity() {
         return state
     }
 
+    fun alertApproveDialog(context: Context,title: String,description: String,pathNumber:Int){
+
+        val builder = AlertDialog.Builder(context,R.style.CustomAlertDialog2)
+            .create()
+        val view = layoutInflater.inflate(R.layout.custom_alert_dialog_approve,null)
+
+        //set title
+        val titleText = view.findViewById<TextView>(R.id.alertTitleText)
+        titleText.text = title
+
+        //set description
+        val textDescription = view.findViewById<TextView>(R.id.alertDescriptionText)
+        textDescription.text = description
+
+        //set button
+        val  negativeButton = view.findViewById<Button>(R.id.btnDialogNegative)
+        negativeButton.setOnClickListener {
+            builder.dismiss()
+
+        }
+        val positiveButton = view.findViewById<Button>(R.id.btnDialogPositive)
+        positiveButton.setOnClickListener{
+            builder.dismiss()
+        }
+        builder.setView(view)
+        builder.setCanceledOnTouchOutside(false)
+        builder.show()
+    }
 
     fun checkOverLeapOrNot(startDate:String, endDate:String, reserveStartDate:String,reserveEndDate:String):Boolean{
         val s = SimpleDateFormat("yyyy-MM-dd")

@@ -60,6 +60,9 @@ public class FeatureReservation {
         Chip06 = chip06;
     }
 
+    public FeatureReservation() {
+    }
+
     @Override
     public String toString() {
         return "FeatureReservation{" +

@@ -1,5 +1,6 @@
 package com.example.trr_app.Fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,7 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
 import com.example.trr_app.adaptor.AllBookingEditeAdaptor
+import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.QuickBooking
+import com.example.trr_app.support.LoadingDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +27,13 @@ class AllPermanentBookingFragment: Fragment() {
 
     private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var allRecyclerView : RecyclerView? = null
+
+    //loading progressBar Dialog
+    private lateinit var loadingDialog : LoadingDialog
+
+    //base
+    val baseActivity = BaseActivity()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,7 +52,9 @@ class AllPermanentBookingFragment: Fragment() {
 
     private fun loadInCompleteBooking() {
 
+        baseActivity.loadingProgressDialog(this.requireContext())
         val date = getCurrentDate()
+
 
         val mChatDatabaseReference = firebaseDatabase.reference.child("TRRApp").child("Booking Details")
             .child("Appointment Reservation")
@@ -73,8 +85,13 @@ class AllPermanentBookingFragment: Fragment() {
                     allRecyclerView!!.adapter = adapter
 
                 }
+
+                baseActivity.loadingDialogClose()
             }
             override fun onCancelled(error: DatabaseError) {
+                //close dialog
+                baseActivity.loadingDialogClose()
+
                 Snackbar.make(view!!,"Data loading failed.", Snackbar.LENGTH_SHORT).show()
                 Log.d(this@AllPermanentBookingFragment.tag, "Data loading failed form firebase end")
             }
@@ -85,5 +102,4 @@ class AllPermanentBookingFragment: Fragment() {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         return sdf.format(Date())
     }
-
 }

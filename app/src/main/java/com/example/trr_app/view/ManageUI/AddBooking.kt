@@ -4,13 +4,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.View.GONE
 import android.view.View.OnClickListener
+import android.view.View.VISIBLE
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.core.util.Pair
+import androidx.core.view.isVisible
 import com.example.trr_app.R
 import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.FeatureReservation
@@ -104,6 +107,13 @@ class AddBooking : BaseActivity(), OnClickListener {
     private val cbRoom7 : CheckBox
         get() = findViewById(R.id.cbRoom07)
 
+    //Layout
+    private val roomReservedLayout : LinearLayout
+        get() = findViewById(R.id.roomSelection)
+
+    private val fullyReservedUI : LinearLayout
+        get() = findViewById(R.id.fullReservedLayout)
+
     //meal chips
     private val chip01 : Chip
         get() = findViewById(R.id.chip_morningTea)
@@ -129,7 +139,6 @@ class AddBooking : BaseActivity(), OnClickListener {
         get() = findViewById(R.id.chipF_4)
     private val chipFeature05 : Chip
         get() = findViewById(R.id.chipF_5)
-
     private val contentView : RelativeLayout
         get() = findViewById(R.id.addBookingLayout)
     private val btnSubmit : MaterialButton
@@ -144,6 +153,8 @@ class AddBooking : BaseActivity(), OnClickListener {
     private var roomFlag03 : Boolean = false
     private var roomFlag04 : Boolean = false
     private var roomFlag05 : Boolean = false
+    private var roomFlag06 : Boolean = false
+    private var roomFlag07 : Boolean = false
 
     //Room Availability
     private var RM1Status : Boolean = false
@@ -265,7 +276,11 @@ class AddBooking : BaseActivity(), OnClickListener {
             RM6Status = isChecked
         }
         cbRoom7.setOnCheckedChangeListener { compoundButton, isChecked ->
-            RM7Status = isChecked
+            if (!RM1Status && !RM2Status && !RM3Status && !RM4Status && !RM5Status && !RM6Status){
+                RM7Status = isChecked
+            }else{
+                Snackbar.make(contentView,"Have conformed bookings",Snackbar.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -360,6 +375,11 @@ class AddBooking : BaseActivity(), OnClickListener {
             bookingDate.setText(convertTimeToDate(it.first) +" - "+convertTimeToDate(it.second))
             checkInDate = convertTimeToDate(it.first)
             checkOutDate = convertTimeToDate(it.second)
+
+            if (fullyReservedUI.visibility==VISIBLE){
+                fullyReservedUI.visibility = GONE
+                roomReservedLayout.visibility = VISIBLE
+            }
 
             //add data load
             loadBooking(checkInDate!!, checkOutDate!!)
@@ -539,11 +559,12 @@ class AddBooking : BaseActivity(), OnClickListener {
                     .show()
             }
         }else{
+            dateNotSelect()
             //close dialog
             loadingDialogClose()
-            Log.e(TAG, "Please input valid date.")
-            Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
-                .show()
+            //Log.e(TAG, "Please input valid date.")
+            //Snackbar.make(contentView, R.string.data_upload_error, Snackbar.LENGTH_SHORT)
+                //.show()
         }
     }
 
@@ -660,6 +681,12 @@ class AddBooking : BaseActivity(), OnClickListener {
 
                 }else if (roomBookingList[i].room05==true){
                     roomFlag05 = true
+
+                }else if (roomBookingList[i].room06==true){
+                    roomFlag06 = true
+
+                }else if (roomBookingList[i].room07==true){
+                    roomFlag07 = true
                 }
             }
 
@@ -693,6 +720,26 @@ class AddBooking : BaseActivity(), OnClickListener {
             cbRoom5.isChecked=true
             cbRoom5.isClickable=false
             cbRoom5.isEnabled = false
+        }
+        if (roomFlag06){
+            cbRoom6.isChecked=true
+            cbRoom6.isClickable=false
+            cbRoom6.isEnabled = false
+        }
+        if (roomFlag01 || roomFlag02 || roomFlag03 || roomFlag04 || roomFlag05 || roomFlag06){
+            cbRoom7.isVisible = false
+            cbRoom7.isClickable=false
+            cbRoom7.isEnabled = false
+            cbRoom7.visibility = GONE
+        }else{
+            cbRoom7.isVisible = true
+            cbRoom7.isClickable=true
+            cbRoom7.isEnabled = true
+            cbRoom7.visibility = VISIBLE
+        }
+        if (roomFlag07){
+            roomReservedLayout.visibility= GONE
+            fullyReservedUI.visibility = VISIBLE
         }
     }
 }

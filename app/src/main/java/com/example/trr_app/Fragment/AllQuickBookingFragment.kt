@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
 import com.example.trr_app.adaptor.AllBookingEditeAdaptor
+import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.QuickBooking
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -24,6 +25,9 @@ class AllQuickBookingFragment : Fragment() {
 
     private val firebaseDatabase: FirebaseDatabase = FirebaseDatabase.getInstance()
     private var allRecyclerView : RecyclerView? = null
+
+    //Base
+    val base = BaseActivity()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +46,9 @@ class AllQuickBookingFragment : Fragment() {
     }
 
     private fun loadInCompleteBooking() {
+
+        //loading progress dialog
+        base.loadingProgressDialog(this.requireContext())
 
         val date = getCurrentDate()
 
@@ -72,8 +79,13 @@ class AllQuickBookingFragment : Fragment() {
                     val adapter = AllBookingEditeAdaptor(context!!,upComingBookingList)
                     allRecyclerView!!.adapter = adapter
                 }
+
+                base.loadingDialogClose()
             }
             override fun onCancelled(error: DatabaseError) {
+                //close dialog
+                base.loadingDialogClose()
+
                 Snackbar.make(view!!,"Data loading failed.", Snackbar.LENGTH_SHORT).show()
                 Log.d(this@AllQuickBookingFragment.tag, "Data loading failed form firebase end")
             }

@@ -23,4 +23,8 @@
         <item name="android:windowBackground">@drawable/conner_radius</item>
     </style>
 
+    <style name="CustomAlertDialog2" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/round_conner</item>
+    </style>
+
 </resources>

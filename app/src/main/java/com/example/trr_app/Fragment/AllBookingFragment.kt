@@ -27,6 +27,9 @@ class AllBookingFragment : Fragment() {
     private val firebaseDatabase:FirebaseDatabase = FirebaseDatabase.getInstance()
     private var allRecyclerView : RecyclerView? = null
 
+    //base activity
+    private val baseActivity = BaseActivity()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +47,9 @@ class AllBookingFragment : Fragment() {
     }
 
     private fun loadInCompleteBooking() {
+
+        //start loading
+        baseActivity.loadingProgressDialog(this.requireContext())
 
         val date = getCurrentDate()
 
@@ -64,8 +70,13 @@ class AllBookingFragment : Fragment() {
                     val adapter = AllBookingEditeAdaptor(context!!,quickBooking)
                     allRecyclerView!!.adapter = adapter
                 }
+
+                baseActivity.loadingDialogClose()
             }
             override fun onCancelled(error: DatabaseError) {
+                //close dialog
+                baseActivity.loadingDialogClose()
+
                 Snackbar.make(view!!,"Data loading failed.", Snackbar.LENGTH_SHORT).show()
                 Log.d(this@AllBookingFragment.tag, "Data loading failed form firebase end")
             }

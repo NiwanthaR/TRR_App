@@ -17,7 +17,8 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_below="@id/topToolBar"
-            android:id="@+id/scrollView"
+            android:id="@+id/pm_scrollView"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scrollbars="vertical">
@@ -68,7 +69,7 @@
                     android:hint="Booking Date">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/tv_bookingDate"
+                        android:id="@+id/tv_editBookingDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="false"
@@ -95,7 +96,7 @@
                         android:hint="Head Count">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_HeadCount"
+                            android:id="@+id/et_editHeadCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
@@ -113,7 +114,7 @@
                         android:hint="Rooms">
 
                         <AutoCompleteTextView
-                            android:id="@+id/ac_roomCount"
+                            android:id="@+id/et_editRoomCount"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
@@ -123,24 +124,8 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/etPCount"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:hint="Booking Type">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/ac_bookingType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="none"
-                        />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/titleBar3"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
@@ -169,6 +154,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/roomSelection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,6 +208,7 @@
                     android:id="@+id/titleBar1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal">
 
                     <com.google.android.material.divider.MaterialDivider
@@ -251,7 +238,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/etFName"
+                        android:id="@+id/et_editFName"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
@@ -259,7 +246,7 @@
                         android:hint="First Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_fname"
+                            android:id="@+id/eti_editFname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -275,7 +262,7 @@
                         android:hint="Second Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_sname"
+                            android:id="@+id/eti_editSname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -294,7 +281,7 @@
                     android:hint="Address">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/eti_address"
+                        android:id="@+id/eti_editAddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -315,7 +302,7 @@
                         android:hint="Area">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_Area"
+                            android:id="@+id/eti_editArea"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -331,7 +318,7 @@
                         android:hint="City">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_city"
+                            android:id="@+id/eti_editCity"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -351,7 +338,7 @@
                     android:hint="Contact">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/eti_contact"
+                        android:id="@+id/eti_editContactNumber"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         />
@@ -375,7 +362,7 @@
                         android:hint="NIC">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/eti_nic"
+                            android:id="@+id/eti_editNIC"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             />
@@ -385,7 +372,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/otherServiceSwitch"
+                    android:id="@+id/editOtherServiceSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:checked="false"
@@ -399,7 +386,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    android:id="@+id/otherServiceLayout">
+                    android:id="@+id/pe_otherServiceLayout">
 
                     <LinearLayout
                         android:id="@+id/titleBar4"
@@ -437,35 +424,35 @@
                             android:layout_width="match_parent">
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chipF_1"
+                                android:id="@+id/chipFedit_1"
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Kitchen"/>
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chipF_2"
+                                android:id="@+id/chipFedit_2"
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Iron"/>
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chipF_3"
+                                android:id="@+id/chipFedit_3"
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Baby Bath TUB"/>
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chipF_4"
+                                android:id="@+id/chipFedit_4"
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Washing Machin"/>
 
                             <com.google.android.material.chip.Chip
-                                android:id="@+id/chipF_5"
+                                android:id="@+id/chipFedit_5"
                                 style="@style/Widget.MaterialComponents.Chip.Filter"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -478,7 +465,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/mealsDetailsSwitch"
+                    android:id="@+id/editMealsDetailsSwitch"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:checked="false"
@@ -487,7 +474,7 @@
                     android:text="Meals and Foods"/>
 
                 <LinearLayout
-                    android:id="@+id/mealDetailsLayout"
+                    android:id="@+id/pe_mealDetailsLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -525,42 +512,42 @@
                         android:layout_width="match_parent">
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_morningTea"
+                            android:id="@+id/editChip_morningTea"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Morning Tea"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_eveningTea"
+                            android:id="@+id/editChip_eveningTea"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Evening Tea"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_breakfast"
+                            android:id="@+id/editChip_breakfast"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Breakfast"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_lunch"
+                            android:id="@+id/editChip_lunch"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Lunch"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_dinner"
+                            android:id="@+id/editChip_dinner"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Dinner"/>
 
                         <com.google.android.material.chip.Chip
-                            android:id="@+id/chip_bbq"
+                            android:id="@+id/editChip_bbq"
                             style="@style/Widget.MaterialComponents.Chip.Filter"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -578,7 +565,7 @@
                     android:hint="Special Note">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/eti_specialNote"
+                        android:id="@+id/editEti_specialNote"
                         android:layout_width="match_parent"
                         android:inputType="textMultiLine"
                         android:gravity="top"
@@ -594,22 +581,22 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/btn_cancelBooked"
+                        android:id="@+id/editBtn_cancelBooked"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_marginEnd="5dp"
                         android:layout_height="match_parent"
-                        android:text="Cancel Booking"
+                        android:text="Remove Booking"
                         android:backgroundTint="@color/app_backgrounf_cancel_btn"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
                     <Button
-                        android:id="@+id/btn_submitBooked"
+                        android:id="@+id/editBtn_submitBooked"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_marginStart="5dp"
                         android:layout_height="match_parent"
-                        android:text="Submit Booking"
+                        android:text="Save"
                         android:backgroundTint="@color/app_background_accept_btn"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
@@ -621,18 +608,18 @@
 
         <!-- Success Layout-->
         <RelativeLayout
-            android:id="@+id/successfullyLayout"
+            android:id="@+id/pm_successfullyLayout"
             android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone">
 
             <TextView
-                android:id="@+id/success_title"
+                android:id="@+id/pe_titleMessage"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Successfully Booked"
+                android:text="Update Successfully."
                 android:fontFamily="@font/rubik_medium"
                 android:textSize="20sp"
                 android:textAlignment="center"/>
@@ -640,7 +627,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/success_title"
+                android:layout_below="@id/pe_titleMessage"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
@@ -656,17 +643,19 @@
                     android:layout_centerInParent="true"/>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnGoQuick"
+                    android:id="@+id/pe_btnGoQuick"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="60dp"
                     android:layout_marginBottom="10dp"
                     android:layout_marginRight="60dp"
                     android:textColor="@color/black"
-                    android:background="@color/app_yellow_light"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    app:cornerRadius="20dp"
                     app:backgroundTint="@color/app_yellow_light"
-                    android:text="Done"/>
+                    android:text="Go Back"/>
 
             </LinearLayout>
 
