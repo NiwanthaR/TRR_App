@@ -127,7 +127,9 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
 
                     for (snapshot in snapshot.children){
                         val booking = snapshot.getValue(QuickBooking::class.java)
-                        quickBooking.add(booking!!)
+                        if (booking?.bookingType =="Temporary"){
+                            quickBooking.add(booking!!)
+                        }
                     }
                     val adapter = QuickBookingAdaptor(this@QuickBookingActivity,quickBooking)
                     recyclerView.adapter = adapter

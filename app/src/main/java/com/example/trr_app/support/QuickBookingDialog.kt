@@ -1,22 +1,20 @@
 package com.example.trr_app.support
 
 import android.app.Dialog
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.isVisible
 import com.example.trr_app.R
 import com.example.trr_app.adaptor.RoomAdaptor
 import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.RoomReserve
-import com.example.trr_app.view.Dashboard
-import com.example.trr_app.view.ManageUI.AddQuickBooking
-import com.example.trr_app.view.ManageUI.QuickBookingActivity
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -27,8 +25,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 
 
-class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:String?,dateRange:String?): BottomSheetDialogFragment() {
+class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:String?,dateRange:String?): BottomSheetDialogFragment(),OnClickListener {
 
+    //Edite text
     private lateinit var addQuickBooking: Unit
     private lateinit var customerName : TextInputEditText
     private lateinit var headCount : TextInputEditText
@@ -36,6 +35,7 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
     private lateinit var specialNote : TextInputEditText
     private lateinit var btnSubmit : MaterialButton
 
+    //strings
     private var name: String? = null
     private var count: String? = null
     private var contact : String?  = null
@@ -67,7 +67,18 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
     private var R006 : Boolean = false
     private var R007 : Boolean = false
 
+    //dialog
     private var roomAdaptorList = roomAdaptor
+
+    //layout
+    private lateinit var quickRelative : RelativeLayout
+    private lateinit var quickSuccessDialog: RelativeLayout
+
+    //btn
+    private lateinit var quickGoBackBtn : MaterialButton
+
+    //textview
+    private lateinit var quickSuccessTitle : TextView
 
     private lateinit var dialog : BottomSheetDialog
 
@@ -96,6 +107,17 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
         btnSubmit = view.findViewById(R.id.btnQuickSubmit)
         //val courseButton = view.findViewById<Button>(R.id.course_button)
 
+        //layout
+        quickRelative = view.findViewById(R.id.quickBookingRelative)
+        quickSuccessDialog = view.findViewById(R.id.successfullyLayoutNewQuick)
+
+        //btn
+        quickGoBackBtn = view.findViewById(R.id.nq_goBackBtn)
+
+        //Textview
+        quickSuccessTitle = view.findViewById(R.id.successNewQuick_title)
+
+        //navigate layout
         btnSubmit.setOnClickListener(View.OnClickListener {
             readValue()
         })
@@ -103,11 +125,16 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
 //            Toast.makeText(activity, "Algorithm Shared", Toast.LENGTH_SHORT).show()
 //            dismiss()
 //        }
+        quickGoBackBtn.setOnClickListener(this)
 //
 //        courseButton.setOnClickListener {
 //            Toast.makeText(activity, "Course Shared", Toast.LENGTH_SHORT).show()
 //            dismiss()
 //        }
+
+        //navigate ui
+        quickRelative.visibility = View.VISIBLE
+        quickSuccessDialog.visibility = View.GONE
 
         return view
     }
@@ -260,25 +287,36 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
                     if (task.isSuccessful){
 
                         //Toast.makeText(this@QuickBookingDialog.context,R.string.booking_successfully, Toast.LENGTH_SHORT).show()
-                        successAlertDialog.showDialog(this@QuickBookingDialog.activity,"")
-                        dialog.dismiss()
+
+                        //navigate ui
+                        quickRelative.visibility = View.GONE
+                        quickSuccessDialog.visibility = View.VISIBLE
+
+                        //successAlertDialog.showDialog(this@QuickBookingDialog.activity,"")
+                        //dialog.dismiss()
 
                     }else{
                         Log.e(TAG, "Data upload not success.")
-                        Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+                        Toast.makeText(this.requireContext(),R.string.data_upload_failed, Toast.LENGTH_SHORT)
                             .show()
                     }
 
                 }.addOnFailureListener { OnFailureListener{
                     Log.e(TAG, "Data upload not success.")
-                    Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+                    Toast.makeText(this.requireContext(),R.string.data_upload_failed, Toast.LENGTH_SHORT)
                         .show()
                 }
                 }
         }else{
             Log.e(TAG, "Selected room null")
-            Toast.makeText(this@QuickBookingDialog.context,R.string.data_upload_failed, Toast.LENGTH_SHORT)
+            Toast.makeText(this.requireContext(),R.string.data_upload_failed, Toast.LENGTH_SHORT)
                 .show()
+        }
+    }
+
+    override fun onClick(view: View) {
+        when(view.id){
+            R.id.nq_goBackBtn -> dialog.dismiss()
         }
     }
 }
