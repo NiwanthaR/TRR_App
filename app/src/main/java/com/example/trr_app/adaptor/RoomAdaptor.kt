@@ -5,18 +5,23 @@ import android.service.autofill.Dataset
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
 import com.example.trr_app.holders.RoomViewHolder
 import com.example.trr_app.holders.UserViewHolder
 import com.example.trr_app.model.Room
+import com.example.trr_app.model.RoomBookingDetails
+import com.example.trr_app.model.RoomBookingList
 import com.example.trr_app.model.RoomDetails
 import com.example.trr_app.model.RoomReserve
+import com.example.trr_app.support.QuickBookingEdite
 
-class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBookedList:ArrayList<String>,var showBookingBtn:(Boolean) ->Unit ): RecyclerView.Adapter<RoomViewHolder>() {
+class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBookedList:ArrayList<String>,val bookingDetails: RoomBookingDetails,var showBookingBtn:(Boolean) ->Unit ): RecyclerView.Adapter<RoomViewHolder>() {
 
     private var isEnable = false
     private val selectRoomList = mutableListOf<Int>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
         return RoomViewHolder(LayoutInflater.from(context).inflate(R.layout.single_room_card, parent, false))
     }
@@ -43,6 +48,13 @@ class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBoo
             holder.alreadyLayout.visibility = View.VISIBLE
             holder.roomLayout.isActivated = false
             holder.roomLayout.isSelected = false
+
+            //open booking
+            holder.alreadyLayout.setOnClickListener(View.OnClickListener {
+                   holder.bottomSheet = QuickBookingEdite(bookingDetails.getBookedIdForRoom(item.room_unic_code))
+                   val fragmentManager = (context as FragmentActivity).supportFragmentManager
+                   holder.bottomSheet.show(fragmentManager, "ModalBottomSheet")
+            })
 
         }else{
 

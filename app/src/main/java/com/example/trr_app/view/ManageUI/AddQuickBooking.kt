@@ -26,6 +26,8 @@ import com.example.trr_app.holders.BookingViewHolder
 import com.example.trr_app.holders.RoomViewHolder
 import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.Room
+import com.example.trr_app.model.RoomBookingDetails
+import com.example.trr_app.model.RoomBookingList
 import com.example.trr_app.model.RoomDetails
 import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
@@ -49,6 +51,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 
 class AddQuickBooking : BaseActivity(),OnClickListener {
 
@@ -101,6 +105,8 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     //room list
     val roomList : ArrayList<Room> = ArrayList()
     val bookedList = ArrayList<String>()
+    val roomBookingList : ArrayList<RoomBookingList> = ArrayList()
+    val bookingDetails = RoomBookingDetails()
 
     var selectedRoomList : ArrayList<Room> = ArrayList()
 
@@ -115,6 +121,16 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private var R005 : Boolean = false
     private var R006 : Boolean = false
     private var R007 : Boolean = false
+
+    //booking flag
+    private lateinit var R001Key : String
+    private lateinit var R002Key : String
+    private lateinit var R003Key : String
+    private lateinit var R004Key : String
+    private lateinit var R005Key : String
+    private lateinit var R006Key : String
+    private lateinit var R007Key : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_quick_booking)
@@ -174,7 +190,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                     val emptyRoomList = RoomReserve(false,false,false,false,false,false,false)
                     // Access the RecyclerView Adapter and load the data into it
                     bookedList.add("empty")
-                    roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList){ show->showBookingBtn(show)}
+                    roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList,bookingDetails){ show->showBookingBtn(show)}
                     roomRecyclerView.adapter = roomAdaptor
                 }
 
@@ -262,45 +278,77 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
     private fun setAvailability(overLeapList : ArrayList<SubmitBooking>){
 
-        val roomBookingList : ArrayList<RoomReserve> = ArrayList()
+        //val roomBookingList : ArrayList<RoomReserve> = ArrayList()
+
         val listSize = overLeapList.size
 
         if (listSize!=0) {
             for (i in 0..<listSize) {
-                roomBookingList.add(overLeapList[i].roomReserve)
+                //roomBookingList.add(overLeapList[i].roomReserve)
+                val list : RoomBookingList = RoomBookingList()
+                list.roomReserve = overLeapList[i].roomReserve
+                list.bookedId = overLeapList[i].uniqueKey
+
+                //add element
+                roomBookingList.add(list)
             }
+
+            //get count
+            println("result size : "+roomBookingList.size.toString())
 
             //clear list
             bookedList.clear()
 
+
             for (i in 0..<listSize) {
-                if (roomBookingList[i].room01 == true) {
+                if (roomBookingList[i].roomReserve.room01 == true) {
                     R001 = true
                     bookedList.add("R001")
+                    //set key
+                    bookingDetails.reserveRoom("R001",roomBookingList[i].getBookedId())
+                    //R001Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room02 == true) {
+                if (roomBookingList[i].roomReserve.room02 == true) {
                     R002 = true
                     bookedList.add("R002")
+                    //set key
+                    bookingDetails.reserveRoom("R002",roomBookingList[i].bookedId)
+                    //R002Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room03 == true) {
+                if (roomBookingList[i].roomReserve.room03 == true) {
                     R003 = true
                     bookedList.add("R003")
+                    //set key
+                    bookingDetails.reserveRoom("R003",roomBookingList[i].bookedId)
+                    //R003Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room04 == true) {
+                if (roomBookingList[i].roomReserve.room04 == true) {
                     R004 = true
                     bookedList.add("R004")
+                    //set key
+                    bookingDetails.reserveRoom("R004",roomBookingList[i].bookedId)
+                    //R004Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room05 == true) {
+                if (roomBookingList[i].roomReserve.room05 == true) {
                     R005 = true
                     bookedList.add("R005")
+                    //set key
+                    bookingDetails.reserveRoom("R005",roomBookingList[i].bookedId)
+                    //R005Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room06 == true) {
+                if (roomBookingList[i].roomReserve.room06 == true) {
                     R006 = true
                     bookedList.add("R006")
+                    //set key
+                    bookingDetails.reserveRoom("R006",roomBookingList[i].bookedId)
+                    R006Key = roomBookingList[i].getBookedId()
                 }
-                if (roomBookingList[i].room07 == true) {
+                if (roomBookingList[i].roomReserve.room07 == true) {
                     R007 = true
                     bookedList.add("R007")
+                    //set key
+                    bookingDetails.reserveRoom("R007",roomBookingList[i].bookedId)
+                    //R007Key = roomBookingList[i].getBookedId()
                 }
             }
 
@@ -321,7 +369,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                 //load Data
                 roomRecyclerView.layoutManager = LinearLayoutManager(this@AddQuickBooking)
-                roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList){ show->showBookingBtn(show)}
+                roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList,bookingDetails){ show->showBookingBtn(show)}
                 roomRecyclerView.adapter = roomAdaptor
             }
         }

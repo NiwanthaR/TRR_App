@@ -10,7 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trr_app.R;
+import com.example.trr_app.support.QuickBookingEdite;
 import com.google.android.material.card.MaterialCardView;
+
+import org.jetbrains.annotations.NotNull;
 
 public class RoomViewHolder extends RecyclerView.ViewHolder{
 
@@ -20,6 +23,9 @@ public class RoomViewHolder extends RecyclerView.ViewHolder{
     public LinearLayout alreadyLayout;
     public RelativeLayout roomLayout;
     public ImageView navigateArrow,doneIcon;
+    @NotNull
+    public QuickBookingEdite bottomSheet;
+
     public RoomViewHolder(@NonNull View itemView) {
         super(itemView);
         roomName = itemView.findViewById(R.id.quickRMName);
