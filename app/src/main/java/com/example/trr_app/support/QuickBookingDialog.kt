@@ -1,6 +1,7 @@
 package com.example.trr_app.support
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.trr_app.R
 import com.example.trr_app.adaptor.RoomAdaptor
 import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.RoomReserve
+import com.example.trr_app.view.ManageUI.AddQuickBooking
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -316,7 +318,14 @@ class QuickBookingDialog(roomAdaptor: RoomAdaptor?,startDate:String?,endDate:Str
 
     override fun onClick(view: View) {
         when(view.id){
-            R.id.nq_goBackBtn -> dialog.dismiss()
+            R.id.nq_goBackBtn -> onDismiss(dialog)
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+
+        val activity = requireActivity() as AddQuickBooking
+        activity.resetSegment()
     }
 }

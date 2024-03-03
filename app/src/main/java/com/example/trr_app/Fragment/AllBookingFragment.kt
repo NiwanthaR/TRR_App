@@ -83,7 +83,7 @@ class AllBookingFragment : Fragment() {
         })
     }
 
-    fun getCurrentDate():String{
+    private fun getCurrentDate():String{
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         return sdf.format(Date())
     }

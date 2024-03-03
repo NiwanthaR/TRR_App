@@ -150,9 +150,4 @@ class QuickBookingActivity : BaseActivity(),OnClickListener {
 
         }
     }
-
-    fun getCurrentDate():String{
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
-        return sdf.format(Date())
-    }
 }

@@ -31,6 +31,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 import java.util.regex.Matcher
@@ -202,6 +203,24 @@ open class BaseActivity : AppCompatActivity() {
         builder.setView(view)
         builder.setCanceledOnTouchOutside(false)
         builder.show()
+    }
+
+    fun getCurrentDate():String{
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(Date())
+    }
+
+    fun areDateRangesOverlapping(startDate1: String, endDate1: String, startDate2: String, endDate2: String): Boolean {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+
+        // Parse the date strings to Date objects
+        val start1: Date = dateFormat.parse(startDate1) ?: return false
+        val end1: Date = dateFormat.parse(endDate1) ?: return false
+        val start2: Date = dateFormat.parse(startDate2) ?: return false
+        val end2: Date = dateFormat.parse(endDate2) ?: return false
+
+        // Check if the ranges overlap
+        return !(end1.before(start2) || start1.after(end2))
     }
 
     fun checkOverLeapOrNot(startDate:String, endDate:String, reserveStartDate:String,reserveEndDate:String):Boolean{

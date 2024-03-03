@@ -82,5 +82,11 @@ dependencies {
     // FirebaseUI for Firebase Realtime Database
     implementation ("com.firebaseui:firebase-ui-database:8.0.2")
 
+    //calender view
+    implementation("com.applandeo:material-calendar-view:1.9.0-rc04")
+    //implementation ("com.applandeo:material-calendar-view:1.7.0")
+    //implementation("androidx.compose.material3:material3:1.2.0")
+    //implementation("androidx.compose.material3:material3-window-size-class:1.2.0")
+
 
 }

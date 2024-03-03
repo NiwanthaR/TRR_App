@@ -1,29 +1,27 @@
 package com.example.trr_app.view.ManageUI
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.INVISIBLE
 import android.view.View.OnClickListener
 import android.view.View.VISIBLE
-import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.ScrollView
 import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.core.util.Pair
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trr_app.R
 import com.example.trr_app.adaptor.RoomAdaptor
-import com.example.trr_app.adaptor.UserAdaptor
 import com.example.trr_app.common.BaseActivity
-import com.example.trr_app.holders.BookingViewHolder
 import com.example.trr_app.holders.RoomViewHolder
+import com.example.trr_app.model.BookingDate
 import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.Room
 import com.example.trr_app.model.RoomBookingDetails
@@ -31,19 +29,15 @@ import com.example.trr_app.model.RoomBookingList
 import com.example.trr_app.model.RoomDetails
 import com.example.trr_app.model.RoomReserve
 import com.example.trr_app.model.SubmitBooking
-import com.example.trr_app.model.User
+import com.example.trr_app.support.BookingDateCalender
 import com.example.trr_app.support.QuickBookingDialog
-import com.example.trr_app.view.Dashboard
 import com.firebase.ui.database.FirebaseRecyclerAdapter
 import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.database.DataSnapshot
@@ -51,8 +45,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.JsonArray
-import com.google.gson.JsonObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class AddQuickBooking : BaseActivity(),OnClickListener {
 
@@ -71,8 +66,29 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private val roomDataListLayout : ScrollView
         get() = findViewById(R.id.dataLoadedLayout)
 
+    //floating action button
     private val addNewQuickBook : ExtendedFloatingActionButton
         get() = findViewById(R.id.addNewQuickBooking)
+
+    private val availabilitySearchBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnAvailability)
+    private val aRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnAIcon)
+    private val bRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnBIcon)
+    private val cRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnCIcon)
+    private val dRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnDIcon)
+    private val eRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnEIcon)
+    private val fRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnFIcon)
+    private val gRoomBtn : ExtendedFloatingActionButton
+        get() = findViewById(R.id.btnGIcon)
+
+    private val backBtn : ImageView
+        get() = findViewById(R.id.backIconQuickDashboard)
 
     //TAG Name
     private val TAG: String = AddQuickBooking::class.java.name
@@ -113,6 +129,9 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     //bottom sheet
     private var bottomSheet : QuickBookingDialog? = null
 
+    //,clicked function
+    private var clicked = false
+
     //room flag
     private var R001 : Boolean = false
     private var R002 : Boolean = false
@@ -131,19 +150,45 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private lateinit var R006Key : String
     private lateinit var R007Key : String
 
+    //add room availability animation
+    private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(this@AddQuickBooking,R.anim.rote_open_anime) }
+    private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(this@AddQuickBooking,R.anim.rote_close_anime) }
+    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(this@AddQuickBooking,R.anim.from_bottom_anime) }
+    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(this@AddQuickBooking,R.anim.to_bottom_anime) }
+
+    //array set DateRange
+    private var aRoomList = ArrayList<BookingDate>()
+    private var bRoomList = ArrayList<BookingDate>()
+    private var cRoomList = ArrayList<BookingDate>()
+    private var dRoomList = ArrayList<BookingDate>()
+    private var eRoomList = ArrayList<BookingDate>()
+    private var fRoomList = ArrayList<BookingDate>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_quick_booking)
 
         //hide Ui
-        roomDataListLayout.visibility = View.GONE
-        houseFullLayout.visibility = View.GONE
+        roomDataListLayout.visibility = GONE
+        houseFullLayout.visibility = GONE
 
        //load
         loadEssentialData()
         //set Onclick
         dateRangeInput.setOnClickListener(this)
         addNewQuickBook.setOnClickListener(this)
+        backBtn.setOnClickListener(this)
+
+        //floating btn
+        availabilitySearchBtn.setOnClickListener(this)
+        aRoomBtn.setOnClickListener(this)
+        bRoomBtn.setOnClickListener(this)
+        cRoomBtn.setOnClickListener(this)
+        dRoomBtn.setOnClickListener(this)
+        eRoomBtn.setOnClickListener(this)
+        fRoomBtn.setOnClickListener(this)
+        gRoomBtn.setOnClickListener(this)
     }
 
     private fun loadEssentialData(){
@@ -152,12 +197,30 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         //hide floating
         addNewQuickBook.isVisible = false
 
+        //load Availability Booking
+        checkAvailabilityBooking()
+
 //        Snackbar.make(contentView, R.string.booking_successfully, Snackbar.LENGTH_SHORT).show()
 //        startActivity(Intent(this,Dashboard::class.java))
     }
 
+    fun resetSegment(){
+        onResume()
+        //hide Ui
+        addNewQuickBook.isVisible = false
+        availabilitySearchBtn.isVisible = true
+//        roomDataListLayout.visibility = GONE
+//        houseFullLayout.visibility = GONE
+
+        //btn visibility
+//        availabilitySearchBtn.visibility = VISIBLE
+//        loadEssentialData()
+    }
+
     fun showBookingBtn(show:Boolean){
         addNewQuickBook.isVisible = show
+        availabilitySearchBtn.isVisible = !show
+        println("")
     }
 
     private fun loadDataRoom(){
@@ -243,10 +306,11 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 }
 
                 val listSize = bookingList.size
+                overLeapList.clear()
 
                 if (listSize!=0){
                     for (i in 0..< listSize){
-                        if (checkOverLeapOrNot(startDate,endDate,bookingList[i].checkIn,bookingList[i].checkOut)){
+                        if (areDateRangesOverlapping(startDate,endDate,bookingList[i].checkIn,bookingList[i].checkOut)){
                             Log.d(TAG, "Date Overlapped add to array")
                             overLeapList.add(bookingList[i])
                         }else{
@@ -341,7 +405,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                     bookedList.add("R006")
                     //set key
                     bookingDetails.reserveRoom("R006",roomBookingList[i].bookedId)
-                    R006Key = roomBookingList[i].getBookedId()
+                    //R006Key = roomBookingList[i].getBookedId()
                 }
                 if (roomBookingList[i].roomReserve.room07 == true) {
                     R007 = true
@@ -364,14 +428,31 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 selectDateLayout.visibility = GONE
                 roomDataListLayout.visibility = VISIBLE
 
-                //close loading
-                loadingDialogClose()
-
                 //load Data
                 roomRecyclerView.layoutManager = LinearLayoutManager(this@AddQuickBooking)
                 roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList,bookingDetails){ show->showBookingBtn(show)}
                 roomRecyclerView.adapter = roomAdaptor
+
+                //close loading
+                loadingDialogClose()
             }
+        }
+        else if (listSize==0){
+            //change UI
+            houseFullLayout.visibility = GONE
+            selectDateLayout.visibility = GONE
+            roomDataListLayout.visibility = VISIBLE
+
+            //no more booked
+            bookedList.clear()
+
+            //load Data
+            roomRecyclerView.layoutManager = LinearLayoutManager(this@AddQuickBooking)
+            roomAdaptor = RoomAdaptor(roomList, this@AddQuickBooking,bookedList,bookingDetails){ show->showBookingBtn(show)}
+            roomRecyclerView.adapter = roomAdaptor
+
+            //close loading
+            loadingDialogClose()
         }
     }
 
@@ -418,6 +499,18 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         when(view?.id){
             R.id.et_quickSearchDates -> showDatePicker()
             R.id.addNewQuickBooking -> showBottomDialog()
+            //R.id.backIconQuickDashboard -> loadBookingAvailability("R002")
+
+            //floating Action Bnt
+            R.id.btnAIcon -> loadAvailabilityCalender(aRoomList)
+            R.id.btnBIcon -> loadAvailabilityCalender(bRoomList)
+            R.id.btnCIcon -> loadAvailabilityCalender(cRoomList)
+            R.id.btnDIcon -> loadAvailabilityCalender(dRoomList)
+            R.id.btnEIcon -> loadAvailabilityCalender(eRoomList)
+            R.id.btnFIcon -> loadAvailabilityCalender(fRoomList)
+            R.id.btnGIcon -> loadAvailabilityCalender(aRoomList)
+
+            R.id.btnAvailability -> onAddButtonClick()
         }
     }
 
@@ -471,5 +564,142 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         bottomSheet = QuickBookingDialog(roomAdaptor,startDate,endDate,dateRange)
         bottomSheet!!.show(supportFragmentManager, "ModalBottomSheet")
 
+    }
+
+    private fun convertStringToDate(dateString: String): Date {
+        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return format.parse(dateString) ?: Date()
+    }
+
+    private fun checkAvailabilityBooking() {
+
+        //start loading
+        loadingProgressDialog(this)
+
+        val date = getCurrentDate()
+
+        val mChatDatabaseReference = firebaseDatabase.reference.child("TRRApp").child("Booking Details")
+            .child("Appointment Reservation")
+        val query = mChatDatabaseReference.ref.orderByChild("checkIn").startAfter(date)
+        query.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val  bookingList = ArrayList<QuickBooking>()
+                bookingList.clear()
+                if (snapshot!=null){
+                    for (snapshot in snapshot.children){
+                        val booking = snapshot.getValue(QuickBooking::class.java)
+                        bookingList.add(booking!!)
+                    }
+                }
+
+                val listSize = bookingList.size
+
+                for (i in 0..< listSize){
+                    if (bookingList[i].roomReserve.room01==true){
+                        aRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                    if (bookingList[i].roomReserve.room02==true){
+                        bRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                    if (bookingList[i].roomReserve.room03==true){
+                        cRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                    if (bookingList[i].roomReserve.room04==true){
+                        dRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                    if (bookingList[i].roomReserve.room05==true){
+                        eRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                    if (bookingList[i].roomReserve.room06==true){
+                        fRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }
+                }
+
+                aRoomList
+                Log.d(this@AddQuickBooking.TAG,aRoomList.toString())
+
+                bRoomList
+                Log.d(this@AddQuickBooking.TAG,bRoomList.toString())
+
+                cRoomList
+                Log.d(this@AddQuickBooking.TAG,cRoomList.toString())
+
+                dRoomList
+                Log.d(this@AddQuickBooking.TAG,dRoomList.toString())
+
+                eRoomList
+                Log.d(this@AddQuickBooking.TAG,eRoomList.toString())
+
+                fRoomList
+                Log.d(this@AddQuickBooking.TAG,fRoomList.toString())
+
+               loadingDialogClose()
+            }
+            override fun onCancelled(error: DatabaseError) {
+                //close dialog
+                loadingDialogClose()
+
+                Snackbar.make(contentViewRelative,"Data loading failed.", Snackbar.LENGTH_SHORT).show()
+                Log.d(this@AddQuickBooking.TAG, "Data loading failed form firebase end")
+            }
+        })
+    }
+
+    private fun loadAvailabilityCalender(booking:ArrayList<BookingDate>){
+        //load data
+        loadingProgressDialog(this@AddQuickBooking)
+        val fragment = BookingDateCalender.newInstance(booking)
+        fragment.show(supportFragmentManager, "Availability Calender")
+        loadingDialogClose()
+    }
+
+    private fun onAddButtonClick(){
+        setVisibility(clicked)
+        setAnimation(clicked)
+        clicked = !clicked
+    }
+
+    private fun setVisibility(clicked:Boolean){
+        if (!clicked){
+            aRoomBtn.visibility = INVISIBLE
+            bRoomBtn.visibility = INVISIBLE
+            cRoomBtn.visibility = INVISIBLE
+            dRoomBtn.visibility = INVISIBLE
+            eRoomBtn.visibility = INVISIBLE
+            fRoomBtn.visibility = INVISIBLE
+            gRoomBtn.visibility = INVISIBLE
+        }else{
+            aRoomBtn.visibility = GONE
+            bRoomBtn.visibility = GONE
+            cRoomBtn.visibility = GONE
+            dRoomBtn.visibility = GONE
+            eRoomBtn.visibility = GONE
+            fRoomBtn.visibility = GONE
+            gRoomBtn.visibility = GONE
+        }
+    }
+
+    private fun setAnimation(clicked:Boolean){
+        if (!clicked){
+            aRoomBtn.startAnimation(fromBottom)
+            bRoomBtn.startAnimation(fromBottom)
+            cRoomBtn.startAnimation(fromBottom)
+            dRoomBtn.startAnimation(fromBottom)
+            eRoomBtn.startAnimation(fromBottom)
+            fRoomBtn.startAnimation(fromBottom)
+            gRoomBtn.startAnimation(fromBottom)
+
+            availabilitySearchBtn.startAnimation(rotateOpen)
+        }else{
+            aRoomBtn.startAnimation(toBottom)
+            bRoomBtn.startAnimation(toBottom)
+            cRoomBtn.startAnimation(toBottom)
+            dRoomBtn.startAnimation(toBottom)
+            eRoomBtn.startAnimation(toBottom)
+            fRoomBtn.startAnimation(toBottom)
+            gRoomBtn.startAnimation(toBottom)
+
+            availabilitySearchBtn.startAnimation(rotateClose)
+        }
     }
 }

@@ -5,9 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import com.example.trr_app.R
@@ -15,12 +13,8 @@ import com.example.trr_app.common.BaseActivity
 import com.example.trr_app.model.User
 import com.example.trr_app.support.BookingSuccessDialog
 import com.example.trr_app.view.ManageUI.AddQuickBooking
-import com.example.trr_app.view.ManageUI.ManageActivity
 import com.example.trr_app.view.ManageUI.ManageBookingActivity
-import com.example.trr_app.view.ManageUI.QuickBookingActivity
 import com.example.trr_app.view.SettingsUI.UserSettings
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.card.MaterialCardView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
