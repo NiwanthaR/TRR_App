@@ -5,7 +5,18 @@
     android:layout_height="wrap_content"
     android:padding="10dp">
 
+    <TextView
+        android:id="@+id/calenderRoomTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/merriweather_regular"
+        android:text="Room 01" />
+
     <com.applandeo.materialcalendarview.CalendarView
+        android:layout_below="@id/calenderRoomTitle"
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

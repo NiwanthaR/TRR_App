@@ -45,6 +45,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -163,6 +166,7 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
     private var dRoomList = ArrayList<BookingDate>()
     private var eRoomList = ArrayList<BookingDate>()
     private var fRoomList = ArrayList<BookingDate>()
+    private var gRoomList = ArrayList<BookingDate>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -474,9 +478,9 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
             .setCalendarConstraints(constraintsBuilder.build())
             .build()
 
-        picker.show(this.supportFragmentManager,TAG)
+//        picker.show(this.supportFragmentManager,TAG)
         //close dialog
-        loadingDialogClose()
+        //loadingDialogClose()
 
         picker.addOnPositiveButtonClickListener {
             dateRangeInput.setText(convertTimesToDates(it.first) +" - "+convertTimesToDates(it.second))
@@ -493,6 +497,20 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                     .show()
             }
         }
+
+        picker.addOnCancelListener {
+            // Close the progress dialog when the date picker is fully shown
+            loadingDialogClose()
+        }
+
+        picker.addOnDismissListener {
+            // Close the progress dialog when the date picker is fully shown
+            loadingDialogClose()
+        }
+
+        picker.show(this.supportFragmentManager,TAG)
+        //close dialog
+        loadingDialogClose()
     }
 
     override fun onClick(view: View?) {
@@ -502,13 +520,13 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
             //R.id.backIconQuickDashboard -> loadBookingAvailability("R002")
 
             //floating Action Bnt
-            R.id.btnAIcon -> loadAvailabilityCalender(aRoomList)
-            R.id.btnBIcon -> loadAvailabilityCalender(bRoomList)
-            R.id.btnCIcon -> loadAvailabilityCalender(cRoomList)
-            R.id.btnDIcon -> loadAvailabilityCalender(dRoomList)
-            R.id.btnEIcon -> loadAvailabilityCalender(eRoomList)
-            R.id.btnFIcon -> loadAvailabilityCalender(fRoomList)
-            R.id.btnGIcon -> loadAvailabilityCalender(aRoomList)
+            R.id.btnAIcon -> loadAvailabilityCalender(aRoomList,"Araliya Residents")
+            R.id.btnBIcon -> loadAvailabilityCalender(bRoomList,"Sunflower Residents")
+            R.id.btnCIcon -> loadAvailabilityCalender(cRoomList,"Orchid Residents ")
+            R.id.btnDIcon -> loadAvailabilityCalender(dRoomList,"Nelum Residents")
+            R.id.btnEIcon -> loadAvailabilityCalender(eRoomList,"Olu Residents")
+            R.id.btnFIcon -> loadAvailabilityCalender(fRoomList,"Kumudu Residents")
+            R.id.btnGIcon -> loadAvailabilityCalender(gRoomList,"Full Villa")
 
             R.id.btnAvailability -> onAddButtonClick()
         }
@@ -597,21 +615,29 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 for (i in 0..< listSize){
                     if (bookingList[i].roomReserve.room01==true){
                         aRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                     if (bookingList[i].roomReserve.room02==true){
                         bRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                     if (bookingList[i].roomReserve.room03==true){
                         cRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                     if (bookingList[i].roomReserve.room04==true){
                         dRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                     if (bookingList[i].roomReserve.room05==true){
                         eRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                     if (bookingList[i].roomReserve.room06==true){
                         fRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
+                    }else{
+                        gRoomList.add(BookingDate(convertStringToDate(bookingList[i].checkIn),convertStringToDate(bookingList[i].checkOut)))
                     }
                 }
 
@@ -633,6 +659,9 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
                 fRoomList
                 Log.d(this@AddQuickBooking.TAG,fRoomList.toString())
 
+                gRoomList
+                Log.d(this@AddQuickBooking.TAG,gRoomList.toString())
+
                loadingDialogClose()
             }
             override fun onCancelled(error: DatabaseError) {
@@ -645,12 +674,18 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
         })
     }
 
-    private fun loadAvailabilityCalender(booking:ArrayList<BookingDate>){
+    private fun loadAvailabilityCalender(booking:ArrayList<BookingDate>,roomName:String){
         //load data
-        loadingProgressDialog(this@AddQuickBooking)
-        val fragment = BookingDateCalender.newInstance(booking)
-        fragment.show(supportFragmentManager, "Availability Calender")
-        loadingDialogClose()
+//        loadingProgressDialog(this@AddQuickBooking)
+//        val fragment = BookingDateCalender.newInstance(booking)
+//        fragment.show(supportFragmentManager, "Availability Calender")
+//        loadingDialogClose()
+
+
+        GlobalScope.launch(Dispatchers.Main) {
+            val fragment = BookingDateCalender.newInstance(booking,roomName)
+            fragment.show(supportFragmentManager, "Availability Calender")
+        }
     }
 
     private fun onAddButtonClick(){

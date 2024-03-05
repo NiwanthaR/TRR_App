@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +12,10 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.view.isVisible
 import com.example.trr_app.R
 import com.example.trr_app.model.QuickBooking
 import com.example.trr_app.model.RoomReserve
@@ -32,11 +35,12 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 class QuickBookingEdite(//Strings
-    private var bookingID: String?
+    private var bookingID: String?,private var pathNumber:Int
 ):BottomSheetDialogFragment(),OnClickListener {
 
     //dialog
     private lateinit var dialog : BottomSheetDialog
+    private lateinit var dialogTitle : TextView
     //text views
     private lateinit var customerName : TextInputEditText
     private lateinit var headCount : TextInputEditText
@@ -54,6 +58,10 @@ class QuickBookingEdite(//Strings
     //relative
     private lateinit var contentView : RelativeLayout
     private lateinit var quickSuccessLayout : RelativeLayout
+
+    //linear
+    private lateinit var bottomSpaceLayout : LinearLayout
+    private lateinit var bottomButtonLayout : LinearLayout
 
     //Firebase
     val firebaseDatabase : FirebaseDatabase = FirebaseDatabase.getInstance()
@@ -75,8 +83,6 @@ class QuickBookingEdite(//Strings
     private var uniqueKey : String? = null
     //RoomsReserve
     private var roomReserve : RoomReserve? = null
-
-
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
@@ -103,6 +109,7 @@ class QuickBookingEdite(//Strings
 
         //Text view
         successDialogText = view.findViewById(R.id.successQuick_title)
+        dialogTitle = view.findViewById(R.id.quickBookingBottomTitle_text)
         //btn
         btnDelete = view.findViewById(R.id.edite_btnQuickDelete)
         btnSubmit = view.findViewById(R.id.edite_btnQuickSave)
@@ -113,6 +120,8 @@ class QuickBookingEdite(//Strings
 
         //relative layout
         quickSuccessLayout = view.findViewById(R.id.successfullyLayoutQuick)
+        bottomSpaceLayout = view.findViewById(R.id.quickBookingEditeSpaceLayout)
+        bottomButtonLayout = view.findViewById(R.id.quickBookingEditeBtnLayout)
 
         //UI assign
         quickSuccessLayout.visibility = View.GONE
@@ -124,7 +133,34 @@ class QuickBookingEdite(//Strings
 
         getReadValue(bookingID)
 
+        if (pathNumber==2){
+            bottomButtonLayout.isVisible = false
+            bottomSpaceLayout.isVisible = true
+            dialogTitle.text = "Already Booked By"
+            componentEditable(false)
+
+        }else{
+            bottomButtonLayout.isVisible = true
+            bottomSpaceLayout.isVisible = false
+            dialogTitle.text = "Booking Details"
+            componentEditable(true)
+        }
+
         return view
+    }
+
+    private fun componentEditable(boolean: Boolean){
+        if (!boolean){
+            customerName.inputType = InputType.TYPE_NULL
+            headCount.inputType = InputType.TYPE_NULL
+            specialNote.inputType = InputType.TYPE_NULL
+            contactNumber.inputType = InputType.TYPE_NULL
+        }else{
+            customerName.inputType = InputType.TYPE_CLASS_TEXT
+            headCount.inputType = InputType.TYPE_CLASS_TEXT
+            specialNote.inputType = InputType.TYPE_CLASS_TEXT
+            contactNumber.inputType = InputType.TYPE_CLASS_TEXT
+        }
     }
 
     private fun getReadValue(userID:String?){

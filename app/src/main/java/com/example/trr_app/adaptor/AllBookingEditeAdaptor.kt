@@ -96,7 +96,7 @@ class AllBookingEditeAdaptor(var context: Context, var items : ArrayList<QuickBo
 
         holder.btnedit?.setOnClickListener {
             if (userDto.bookingType != "Permanent") {
-                holder.bottomSheet = QuickBookingEdite(userDto.getUniqueKey())
+                holder.bottomSheet = QuickBookingEdite(userDto.getUniqueKey(),1)
                 val fragmentManager = (context as FragmentActivity).supportFragmentManager
                 holder.bottomSheet!!.show(fragmentManager, "ModalBottomSheet")
             }else{

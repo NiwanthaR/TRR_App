@@ -124,23 +124,41 @@
             android:layout_height="match_parent"
             android:background="@color/card_mix_colour">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:fontFamily="@font/rubik_medium_italic"
-                android:textColor="@color/white"
-                android:text="Already Booked"/>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:lottie_rawRes="@raw/already_done"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                android:layout_centerInParent="true"/>
+               <TextView
+                   android:id="@+id/reservedText"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textAlignment="center"
+                   android:gravity="center"
+                   android:textSize="22sp"
+                   android:layout_centerInParent="true"
+                   android:fontFamily="@font/rubik_medium_italic"
+                   android:textColor="@color/white"
+                   android:text="Room Reserved"/>
+
+               <com.airbnb.lottie.LottieAnimationView
+                   android:layout_width="50dp"
+                   android:layout_height="50dp"
+                   app:lottie_rawRes="@raw/already_done"
+                   app:lottie_autoPlay="true"
+                   app:lottie_loop="true"
+                   android:layout_centerVertical="true"
+                   android:layout_toRightOf="@id/reservedText"/>
+
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="Click here to see more details"
+                   android:textColor="@color/white"
+                   android:fontFamily="@font/rubik_light"
+                   android:layout_below="@id/reservedText"
+                   android:layout_centerHorizontal="true"/>
+
+           </RelativeLayout>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

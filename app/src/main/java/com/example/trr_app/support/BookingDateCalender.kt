@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.applandeo.materialcalendarview.CalendarView
 import com.applandeo.materialcalendarview.EventDay
@@ -18,6 +19,7 @@ import java.util.Locale
 class BookingDateCalender : DialogFragment(){
 
     private lateinit var bookingDateRanges: List<BookingDate>
+    private lateinit var roomName : String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +36,10 @@ class BookingDateCalender : DialogFragment(){
 
         // Find the CalendarView within the inflated layout
         val calendarView = view.findViewById<CalendarView>(R.id.calendarView)
+
+        //set Text
+        view.findViewById<TextView>(R.id.calenderRoomTitle).text = roomName
+
         
         // Set the event days to the CalendarView
         calendarView.setEvents(eventDays)
@@ -87,9 +93,10 @@ class BookingDateCalender : DialogFragment(){
     }
 
     companion object {
-        fun newInstance(bookingDateRanges: List<BookingDate>): BookingDateCalender {
+        fun newInstance(bookingDateRanges: List<BookingDate>,roomName:String): BookingDateCalender {
             val fragment = BookingDateCalender()
             fragment.bookingDateRanges = bookingDateRanges
+            fragment.roomName = roomName
             return fragment
         }
     }

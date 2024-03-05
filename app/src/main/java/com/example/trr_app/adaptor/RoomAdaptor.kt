@@ -40,7 +40,7 @@ class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBoo
         holder.navigateArrow.visibility = View.VISIBLE
         holder.doneIcon.visibility = View.GONE
 
-        if (alreadyBookedList.size!=1 && item.room_unic_code=="R007"){
+        if (alreadyBookedList.size>0 && item.room_unic_code=="R007"){
             holder.itemView.visibility = View.GONE
         }
 
@@ -51,7 +51,7 @@ class RoomAdaptor(val rooms:ArrayList<Room>, val context: Context,val alreadyBoo
 
             //open booking
             holder.alreadyLayout.setOnClickListener(View.OnClickListener {
-                   holder.bottomSheet = QuickBookingEdite(bookingDetails.getBookedIdForRoom(item.room_unic_code))
+                   holder.bottomSheet = QuickBookingEdite(bookingDetails.getBookedIdForRoom(item.room_unic_code),2)
                    val fragmentManager = (context as FragmentActivity).supportFragmentManager
                    holder.bottomSheet.show(fragmentManager, "ModalBottomSheet")
             })

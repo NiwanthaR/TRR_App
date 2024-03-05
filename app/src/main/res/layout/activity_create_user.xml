@@ -225,7 +225,7 @@
             android:layout_weight="1"
             android:layout_marginStart="5dp"
             android:layout_height="match_parent"
-            android:text="Submit Booking"
+            android:text="Create Account"
             android:backgroundTint="@color/app_background_accept_btn"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
 
