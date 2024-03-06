@@ -305,7 +305,6 @@ class AddQuickBooking : BaseActivity(),OnClickListener {
 
                     }else{
                         Log.e(TAG, "Data loading failed. booking is empty")
-                        Snackbar.make(contentViewRelative,R.string.booking_data_null, Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
